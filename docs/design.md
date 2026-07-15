@@ -4,9 +4,9 @@
 # 1: Testes
 ## 1.1: Rolagem de Xd20
 - Detector de falha crítica --- ok
-- Detector de 20 natural
-- Detector de dano crítico
-- Rolagens de dano
+- Detector de 20 natural --- ok
+- Detector de dano crítico --- ok
+- Rolagens de dano --- ok
 ## 1.2: Superar testes
 - Setar dificuldade
 - Somar a rolagem com modificadores
@@ -26,7 +26,7 @@
 # 3: Itens e habilidades
 ## 3.1: Itens
 - Onde são encontrados
-- Chances de serem encontrados
+- Chances de serem encontrados -- acho q vou fazer eles garantidos se procurar no lugar certo
 - Itens chave
 ### 3.1.1: Efeitos e dano
 - Margem de crítico
