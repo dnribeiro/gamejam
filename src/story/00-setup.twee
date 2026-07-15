@@ -68,7 +68,7 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     atributos: {
         vig: 1, /* vida */
         str: 1, /* ataque */
-        dex: 1, /* furtividade */
+        dex: 1, /* furtividade e esquiva */
         int: 1, /* puzzles e investigacao */
         luck: 1 /* modificador critico */
     },
@@ -84,16 +84,18 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
 
 <<set $player.hp = 50 + 10 * $player.atributos.vig>>
 <<set $player.maxHp = 50 + 10 * $player.atributos.vig>>
+<<set $player.esquiva = 10 + $player.atributos.dex>>
 
 :: Widgets [widget nobr]
 <<widget "encontrarArma">>
-    /* Seta os detalhes da arma*/
+    /* Seta os detalhes da arma */
     <<set _nome = $args[0]>>
-    <<set _numDados = $args[1]>>
-    <<set _tipoDado = $args[2]>>
-    <<set _margemCritico = $args[3] || 20>>
-    <<set _multCritico = $args[4] || 2>>
-    <<set _modificadorAtaque = $args[5] || 0>>
+    <<set _descricao = $args[1]>>
+    <<set _numDados = $args[2]>>
+    <<set _tipoDado = $args[3]>>
+    <<set _margemCritico = $args[4] || 20>>
+    <<set _multCritico = $args[5] || 2>>
+    <<set _modificadorAtaque = $args[6] || 0>>
 
     <<set setup.armaEncontrada = {
         nome: _nome,
@@ -104,10 +106,10 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
         modificadorAtaque: _modificadorAtaque
     }>>
 
-    Você encontra _nome (Dano: _dados dados de _tipoDado lados, crítico _margemCritico, x _multCritico, + _modificadorAtaque em testes de ataque). Gostaria de equipar?
+    Você encontra _nome: _descricao (Dano: _dados dados de _tipoDado lados, crítico _margemCritico, x _multCritico, + _modificadorAtaque em testes de ataque). Gostaria de equipar?
     <span id="decisao-equipar"> 
         <<link "Sim">>
-            <<if $player.equipamento.arma !== null>> /* se o jogador tiver uma arma equipada*/
+            <<if $player.equipamento.arma !== null>> /* se o jogador tiver uma arma equipada */
                 <<run $player.inventario.push($player.equipamento.arma)>>
             <</if>>
             <<set $player.equipamento.arma = setup.armaEncontrada>>
@@ -116,6 +118,36 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
         <<link "Não">>
             <<run $player.inventario.push(setup.armaEncontrada)>>
             <<replace "#decisao-equipar">>Você guardou _nome no seu inventário.<</replace>>
+        <</link>>
+    </span>
+<</widget>>
+
+<<widget "encontrarArmadura">>
+    /* Seta os detalhes da armadura */
+    <<set _nome = $args[0]>>
+    <<set _descricao = $args[1]>>
+    <<set _resistencia = $args[2]>>
+    <<set _esquiva = $args[3] || 0>>
+
+    <<set setup.armaduraEncontrada = {
+        nome: _nome,
+        descricao = _descricao,
+        resistencia: _resistencia,
+        esquiva: _esquiva
+    }>>
+
+    Você encontra _nome: _descricao (Resistência: - _resistencia de dano recebido; + _esquiva de esquiva). Gostaria de equipar?
+    <span id="decisao-equipar"> 
+        <<link "Sim">>
+            <<if $player.equipamento.armadura !== null>> /* Se o jogador tiver alguma armadura equipada */
+                <<run $player.inventario.push($player.equipamento.armadura)>>
+            <</if>>
+            <<set $player.equipamento.armadura = setup.armaduraEncontrada>>
+            <<replace "#decisao-equipar">>Voce equipou _nome.<</replace>>
+        <</link>>
+        <<link "Não">>
+            <<run $player.inventario.push(setup.armaEncontrada)>>
+            <<replace "#decisao-equipar">>Voce guardou _nome no seu inventário.<</replace>>
         <</link>>
     </span>
 <</widget>>
