@@ -1,0 +1,121 @@
+:: StoryData
+{
+  "ifid": "16017D14-65F8-457F-8EAF-873985FC2C19",
+  "format": "SugarCube",
+  "format-version": "2.37.3",
+  "start": "MenuPrincipal"
+}
+
+:: StoryJavaScript [script]
+setup.rollPool = function (n) {
+  let rolls = [];
+  for (let i = 0; i < n; i++) {
+    rolls.push(random(1,20)); // Nd20
+  }
+
+  let maior = Math.max.apply(null, rolls);
+  let sucessoGarantido = maior === 20; // Como o acerto garantido acontece quando qualquer um dá 20, o maior já traz essa indicaçao
+  let falhaCritica = maior===1; // E, como a falha critica so acontece quando todos os dados sao 1, se o maior for 1 significa q todos os outros tb sao
+  return {
+    valor: maior,
+    sucessoGarantido: sucessoGarantido,
+    falhaCritica: falhaCritica
+  }
+};
+
+setup.rollDano = function(n, m) {
+    let rolls = [];
+    for (let i = 0; i < n; i++){
+        rolls.push(random(1,m)) // N dados de M lados
+    }
+    return rolls // Aqui vou retornar a lista direto ja q o dano soma os dados
+}
+
+setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
+    let luck = State.variables.player.atributos.luck;
+    let str = State.variables.player.atributos.str;
+    let modArma = arma.modificadorDano || 0;
+    let modOutros = outrosModificadores || 0;
+    
+    // Rola os dados de dano (retorna a lista de rolagens)
+    let rolagensDados = setup.rollDano(arma.numDados, arma.tipoDado);
+    
+    // Soma todos os dados contidos na lista (Array.reduce)
+    let somaDados = rolagensDados.reduce((total, valorAtual) => total + valorAtual, 0);
+    
+    // Calcula a margem de critico (cada 2 pontos de sorte diminui 1 na margem)
+    let reducaoCritico = Math.floor(sorte / 2);
+    let margemFinal = arma.margemCritico - reducaoCritico;
+    let ehCritico = rollAtaque >= margemFinal;
+    
+    // Base do dano: dados + força + modificador da arma + outros modificadores
+    let danoBase = somaDados + forca + modArma + modOutros;
+    
+    // Aplica o multiplicador se for crítico (se não tiver a propriedade, o padrão é x2)
+    let multiplicador = arma.multCritico || 2;
+    let danoFinal = ehCritico ? danoBase * multiplicador : danoBase;
+    
+    return {
+        dano: danoFinal,
+        critico: ehCritico,
+        dadosRolados: rolagensDados
+    };
+};
+
+:: StoryInit
+<<set $player = {
+    nivel: 1,
+    atributos: {
+        vig: 1, /* vida */
+        str: 1, /* ataque */
+        dex: 1, /* furtividade */
+        int: 1, /* puzzles e investigacao */
+        luck: 1 /* modificador critico */
+    },
+    equipamento: {
+        arma: null,
+        armadura: null
+    },
+    inventario: [],
+    keyItems: [],
+    skills: [],
+    confianca: []
+}>>
+
+<<set $player.hp = 50 + 10 * $player.atributos.vig>>
+<<set $player.maxHp = 50 + 10 * $player.atributos.vig>>
+
+:: Widgets [widget nobr]
+<<widget "encontrarArma">>
+    /* Seta os detalhes da arma*/
+    <<set _nome = $args[0]>>
+    <<set _numDados = $args[1]>>
+    <<set _tipoDado = $args[2]>>
+    <<set _margemCritico = $args[3] || 20>>
+    <<set _multCritico = $args[4] || 2>>
+    <<set _modificadorAtaque = $args[5] || 0>>
+
+    <<set setup.armaEncontrada = {
+        nome: _nome,
+        numDados: _numDados,
+        tipoDado: _tipoDado,
+        margemCritico: _margemCritico,
+        multCritico: _multCritico,
+        modificadorAtaque: _modificadorAtaque
+    }>>
+
+    Você encontra _nome (Dano: _dados dados de _tipoDado lados, crítico _margemCritico, x _multCritico, + _modificadorAtaque em testes de ataque). Gostaria de equipar?
+    <span id="decisao-equipar"> 
+        <<link "Sim">>
+            <<if $player.equipamento.arma !== null>> /* se o jogador tiver uma arma equipada*/
+                <<run $player.inventario.push($player.equipamento.arma)>>
+            <</if>>
+            <<set $player.equipamento.arma = setup.armaEncontrada>>
+            <<replace "#decisao-equipar">>Você equipou _nome.<</replace>>
+        <</link>>
+        <<link "Não">>
+            <<run $player.inventario.push(setup.armaEncontrada)>>
+            <<replace "#decisao-equipar">>Você guardou _nome no seu inventário.<</replace>>
+        <</link>>
+    </span>
+<</widget>>
