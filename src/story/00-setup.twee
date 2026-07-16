@@ -6,6 +6,9 @@
   "start": "MenuPrincipal"
 }
 
+:: StoryTitle
+Sehanctus
+
 :: StoryJavaScript [script]
 setup.rollPool = function (n) {
   let rolls = [];
@@ -22,6 +25,17 @@ setup.rollPool = function (n) {
     falhaCritica: falhaCritica
   }
 };
+
+// caso a dificuldade seja um teste do npc, só colocar o comando de rolar no parametro
+setup.calcPass = function(rollPlayer, dificuldade, modificadores, confianca){
+    if (rollPlayer.sucessoGarantido){
+        return true
+    }
+    if (rollPlayer.falhaCritica){
+        return false
+    }
+    return (rollPlayer.valor + modificadores + confianca) >= dificuldade
+}
 
 setup.rollDano = function(n, m) {
     let rolls = [];
@@ -44,12 +58,12 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     let somaDados = rolagensDados.reduce((total, valorAtual) => total + valorAtual, 0);
     
     // Calcula a margem de critico (cada 2 pontos de sorte diminui 1 na margem)
-    let reducaoCritico = Math.floor(sorte / 2);
+    let reducaoCritico = Math.floor(luck / 2);
     let margemFinal = arma.margemCritico - reducaoCritico;
     let ehCritico = rollAtaque >= margemFinal;
     
     // Base do dano: dados + força + modificador da arma + outros modificadores
-    let danoBase = somaDados + forca + modArma + modOutros;
+    let danoBase = somaDados + str + modArma + modOutros;
     
     // Aplica o multiplicador se for crítico (se não tiver a propriedade, o padrão é x2)
     let multiplicador = arma.multCritico || 2;
@@ -65,6 +79,10 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
 :: StoryInit
 <<set $player = {
     nivel: 1,
+    hp: 60, 
+    maxHp: 60, /* 50 + 10 por nivel de vigor */
+    esquiva: 11, /* 10 + 1 por nivel de destreza */
+    confianca: 0,
     atributos: {
         vig: 1, /* vida */
         str: 1, /* ataque */
@@ -77,14 +95,8 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
         armadura: null
     },
     inventario: [],
-    keyItems: [],
-    skills: [],
-    confianca: 0
+    keyItems: []
 }>>
-
-<<set $player.hp = 50 + 10 * $player.atributos.vig>>
-<<set $player.maxHp = 50 + 10 * $player.atributos.vig>>
-<<set $player.esquiva = 10 + $player.atributos.dex>>
 
 :: Widgets [widget nobr]
 <<widget "encontrarArma">>
@@ -106,7 +118,7 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
         modificadorAtaque: _modificadorAtaque
     }>>
 
-    Você encontra _nome: _descricao (Dano: _dados dados de _tipoDado lados, crítico _margemCritico, x _multCritico, + _modificadorAtaque em testes de ataque). Gostaria de equipar?
+    Você encontra _nome: _descricao (Dano: _numDados dados de _tipoDado lados, crítico _margemCritico, x _multCritico, + _modificadorAtaque em testes de ataque). Gostaria de equipar?
     <span id="decisao-equipar"> 
         <<link "Sim">>
             <<if $player.equipamento.arma !== null>> /* se o jogador tiver uma arma equipada */
@@ -131,7 +143,7 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
 
     <<set setup.armaduraEncontrada = {
         nome: _nome,
-        descricao = _descricao,
+        descricao: _descricao,
         resistencia: _resistencia,
         esquiva: _esquiva
     }>>
@@ -146,8 +158,60 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
             <<replace "#decisao-equipar">>Voce equipou _nome.<</replace>>
         <</link>>
         <<link "Não">>
-            <<run $player.inventario.push(setup.armaEncontrada)>>
+            <<run $player.inventario.push(setup.armaduraEncontrada)>>
             <<replace "#decisao-equipar">>Voce guardou _nome no seu inventário.<</replace>>
+        <</link>>
+    </span>
+<</widget>>
+
+<<widget "encontrarItem">>
+    <<set _nome = $args[0]>>
+    <<set _descricao = $args[1]>>
+    <<set _quantidade = $args[2]>>
+    <<run $player.inventario.push({
+        nome: _nome,
+        descricao: _descricao,
+        quantidade: _quantidade
+    })>>
+    Você encontra _quantidade _nome: _descricao. 
+<</widget>>
+
+<<widget "usarItem">>
+    /* completar quando tiver os itens */
+<</widget>>
+
+<<widget "subirNivel">>
+    Você subiu de nível!
+    <<set $player.nivel += 1>>
+    +5 de vida atual e máxima
+    <<set $player.hp += 5>>
+    <<set $player.maxHp += 5>>
+    +1 de confiança
+    <<set $player.confianca += 1>>
+    Escolha 1 atributo para melhorar:
+    <span id="decisao-atributo"> 
+        <<link "Vigor: +10 de vida">>
+            <<set $player.atributos.vig += 1>>
+            <<set $player.hp += 10>>
+            <<set $player.maxHp += 10>>
+            <<replace "#decisao-atributo">>Você melhorou seu vigor.<</replace>>
+        <</link>>
+        <<link "Força: +1 dado em testes de força, +1 de dano">>
+            <<set $player.atributos.str += 1>>
+            <<replace "#decisao-atributo">>Você melhorou sua força.<</replace>>
+        <</link>>
+        <<link "Destreza: +1 dado em testes de destreza, +1 de chance de esquivar">>
+            <<set $player.atributos.dex += 1>>
+            <<set $player.esquiva += 1>>
+            <<replace "#decisao-atributo">>Você melhorou sua destreza.<</replace>>
+        <</link>>
+        <<link "Intelecto: +1 dado em testes de intelecto">>
+            <<set $player.atributos.int += 1>>
+            <<replace "#decisao-atributo">>Você melhorou seu intelecto.<</replace>>
+        <</link>>
+        <<link "Sorte: maior chance de acertos críticos">>
+            <<set $player.atributos.luck += 1>>
+            <<replace "#decisao-atributo">>Você melhorou sua sorte.<</replace>>
         <</link>>
     </span>
 <</widget>>
