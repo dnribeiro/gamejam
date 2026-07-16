@@ -1,5 +1,14 @@
 :: Widgets [widget nobr]
 <<widget "statusFixo">>
+    /* isso só roda 1x por passagem: cria o "molde" com um id fixo */
+    <div id="status-fixo-container">
+        <<statusFixoConteudo>>
+    </div>
+<</widget>>
+
+<<widget "statusFixoConteudo">>
+    /* isso é o que realmente desenha os números - pode ser chamado
+       de novo, quantas vezes quiser, sem duplicar a moldura */
     <<set _pctVida = Math.max(0, Math.round(($player.hp / $player.maxHp) * 100))>>
     <<set _faixa = setup.rotuloConfianca($player.confianca)>>
 
@@ -7,16 +16,22 @@
         <div>
             <div class="barra-label">VIDA</div>
             <div class="barra-fundo">
-                <div class="barra-preenchimento" style="width: _pctVida%"></div>
+                <div class="barra-preenchimento" @style="'width: ' + _pctVida + '%'"></div>
             </div>
         </div>
-        <div class="confianca-rotulo _faixa.classe">_faixa.texto</div>
+        <div @class="'confianca-rotulo ' + _faixa.classe"><<print _faixa.texto>></div>
     </div>
 
     <div class="top-ui">
         <button><<link "Inventário" "Inventario">><</link>></button>
         <button><<link "Config" "Configuracoes">><</link>></button>
     </div>
+<</widget>>
+
+<<widget "atualizarStatus">>
+    /* chame isso sempre que $player.hp ou $player.confianca mudarem
+       no meio de uma cena, sem navegar pra outra passagem */
+    <<replace "#status-fixo-container">><<statusFixoConteudo>><</replace>>
 <</widget>>
 
 <<widget "encontrarArma">>
