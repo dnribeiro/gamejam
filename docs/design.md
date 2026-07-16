@@ -18,6 +18,7 @@
 - Dificuldade de inimigos
 - Objetivos
 - Narração
+- Fazer loop de combate (nao acabar enquanto o player nao fugir ou morrer ou os inimigos morrerem)
 ## 2.2: Superar cenas 
 - Usar resultados do da seção 1 para determinar sucesso ou falha
 - Recompensas
@@ -32,8 +33,6 @@
 - Margem de crítico
 - Dano normal e crítico
 - Habilidades especiais
-## 3.2: Habilidades
-- Modificadores de teste ou dano
 
 ## 3.3: Sistema de inventário
 - Itens equipados e carregados
@@ -44,8 +43,6 @@
 - Atributos (Força, Destreza, Intelecto, Vigor e Sorte)
 - Habilidades
 - Inventário
-- Nível de confiança por cena
+- Nível de confiança
 
-# 5: Gerar a run aleatoria
-
-# 6: Boss final
+# 5: Boss final

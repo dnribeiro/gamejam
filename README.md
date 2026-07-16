@@ -1,5 +1,5 @@
 # **SEHANCTUS**
-O **Sehanctus** é um jogo de ficção interativa baseada em RPGs de mesa e mecânicas de jogos roguelite, onde o(a) jogador(a), um(a) exausto(a) trabalhador(a) da cidade da Serra - ES, um dia, ao descansar depois de um dia de trabalho cansativo e longos períodos de translado desde sua casa até a empresa, se encontra numa serra mágica lar de bruxas e seres místicos chamado Sehanctus. Sua missão é explorar o local para impedir um ritual que causaria a destruição do lugar.
+O **Sehanctus** é um jogo de ficção interativa baseada em RPGs de mesa, onde o(a) jogador(a), um(a) exausto(a) trabalhador(a) da cidade da Serra - ES, um dia, ao descansar depois de um dia de trabalho cansativo e longos períodos de translado desde sua casa até a empresa, se encontra numa serra mágica lar de bruxas e seres místicos chamado Sehanctus. Sua missão é explorar o local para impedir um ritual que causaria a destruição do lugar.
 # Personagem
 ## Atributos
 O personagem conta com os atributos **Agilidade**, **Força**, **Intelecto**, **Vigor** e **Sorte**. A história começa com cada atributo tendo valor **1**, e cada nível subido permite que um atributo tenha seu valor elevado também.
@@ -8,12 +8,7 @@ O personagem conta com os atributos **Agilidade**, **Força**, **Intelecto**, **
 - O valor de atributo, basicamente vai determinar quantos dados serão rolados para os testes que exigem aquele atributo, além de serem modificadores de dano ou resistências. A **Sorte**, porém, é a exceção, e serve para aumentar a taxa de itens encontrados e pode ser ativada para ajudar em testes ou favorecer acertos críticos.
 
 ## Inventário
-É possível carregar quantos itens quiser, porém, **Itens chave** são perdidos ao final de tentativas.
-
-# Tentativas
-Uma tentativa acaba sempre que o personagem **Morre** (atinge 0 de vida), ou quando o **Boss Final** é derrotado.
-
-Para cada tentativa, são escolhidas 5 **cenas** aleatórias que o jogador deverá superar, porém, um fracasso não significa o fim de uma tentativa, mas pode deixar sua batalha contra o **Boss Final** mais difícil.
+É possível carregar quantos itens quiser.
 
 ## Turnos
 Os turnos serão a maneira que o jogo vai contar o tempo passado em cada **cena**. 
@@ -37,4 +32,4 @@ Em **cenas de combate**, um 20 no dado indica que o ataque **vai** acertar e o d
 - Não, o efeito de acerto garantido acontece só em rolagens onde **o dado** seja 20.
 
 ## Medidor de Confiança
-Não é esperado que você, _player_, resolva o mistério de Sehanctus na primeira tentativa. Por isso, o jogo estará contando a confiança do seu personagem ao precisar superar problemas já superados anteriormente. Conforme as cenas são resolvidas, a confiança do personagem cresce naquela cena específica. Se, em outras tentativas, acontecer de ser necessário explorar e resolver a mesma cena, seu personagem estará mais confiante em suas ações, o que tornará a resolução mais fácil. Porém, cuidado! Quanto mais confiante seu personagem estiver em uma cena, mais seu ego será ferido se ocorrer uma falha e mais esse medidor de confiança para a cena cairá!
+O jogo estará contando a confiança do seu personagem ao precisar superar problemas nesse novo mundo em que ele se encontra. Conforme as cenas são resolvidas, a confiança do personagem cresce. Quanto mais confiante ele tá, mais facilidade ele terá em resolver as cenas. Porém, quanto mais confiante seu personagem estiver em uma cena, mais seu ego será ferido se ocorrer uma falha e mais esse medidor de confiança cairá!
