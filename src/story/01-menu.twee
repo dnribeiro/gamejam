@@ -4,7 +4,7 @@
     <h3>Painel de Desenvolvimento & Testes</h3>
     
     [[Entrar na Sala de Debug|SalaDebug]]
-    [[Novo Jogo|Inicio]]
+    [[Novo Jogo|Combate-exemplo]]
 </div>
 
 :: SalaDebug [nobr]
@@ -108,3 +108,25 @@
 
 <hr>
 [[Voltar para o Menu|MenuPrincipal]]
+
+
+:: Inventario
+<h2>Inventário</h2>
+
+<<if $player.inventario.length === 0>>
+  Vazio.
+<<else>>
+  <<for _i = 0; _i < $player.inventario.length; _i++>>
+    $player.inventario[_i].nome <br>
+  <</for>>
+<</if>>
+
+[[Voltar->Previous()]]
+
+
+:: Configuracoes
+<h2>Configurações</h2>
+
+(placeholder)
+
+[[Voltar->Previous()]]

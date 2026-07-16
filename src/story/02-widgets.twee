@@ -1,4 +1,24 @@
 :: Widgets [widget nobr]
+<<widget "statusFixo">>
+    <<set _pctVida = Math.max(0, Math.round(($player.hp / $player.maxHp) * 100))>>
+    <<set _faixa = setup.rotuloConfianca($player.confianca)>>
+
+    <div class="status-fixo">
+        <div>
+            <div class="barra-label">VIDA</div>
+            <div class="barra-fundo">
+                <div class="barra-preenchimento" style="width: _pctVida%"></div>
+            </div>
+        </div>
+        <div class="confianca-rotulo _faixa.classe">_faixa.texto</div>
+    </div>
+
+    <div class="top-ui">
+        <button><<link "Inventário" "Inventario">><</link>></button>
+        <button><<link "Config" "Configuracoes">><</link>></button>
+    </div>
+<</widget>>
+
 <<widget "encontrarArma">>
     <<set _nome = $args[0]>>
     <<set _descricao = $args[1]>>

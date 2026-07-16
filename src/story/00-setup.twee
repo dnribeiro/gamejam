@@ -76,6 +76,24 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     };
 };
 
+// Converte o valor numerico de confianca num rotulo textual, por faixa.
+// Ajuste os thresholds e textos livremente - é só uma lista ordenada.
+setup.faixasConfianca = [
+    { min: 0,  texto: "Inseguro",  classe: "conf-baixa" },
+    { min: 5,  texto: "Confiante", classe: "conf-media" },
+    { min: 10, texto: "Destemido", classe: "conf-alta" }
+];
+
+setup.rotuloConfianca = function (valor) {
+    // percorre de tras pra frente, pega a primeira faixa cujo "min" o valor atinge
+    for (let i = setup.faixasConfianca.length - 1; i >= 0; i--) {
+        if (valor >= setup.faixasConfianca[i].min) {
+            return setup.faixasConfianca[i];
+        }
+    }
+    return setup.faixasConfianca[0]; // fallback, nao deveria chegar aqui
+};
+
 :: StoryInit
 <<set $player = {
     nivel: 1,
@@ -97,3 +115,51 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     inventario: [],
     keyItems: []
 }>>
+
+
+:: StoryStylesheet [stylesheet]
+:root {
+  --magenta: #e91ec8;
+  --vermelho: #d81f2a;
+  --amarelo: #e8c81e;
+  --branco: #f0f0f0;
+  --conf-baixa: #888;
+  --conf-media: #4fb0e8;
+  --conf-alta: #e8c81e;
+}
+
+body { background: #050505; }
+#story, #passages { color: var(--magenta); font-family: 'Courier New', monospace; max-width: 800px; }
+
+/* status fixo: vida + rotulo de confianca, sempre fora do retangulo de cena */
+.status-fixo { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
+.barra-label { font-size: 11px; opacity: .7; letter-spacing: 1px; margin-bottom: 3px; }
+.barra-fundo { width: 200px; height: 20px; background: #0d0d0d; overflow: hidden; }
+.barra-preenchimento {
+  height: 100%;
+  background: var(--vermelho);
+  transition: width .4s ease;
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+.confianca-rotulo { font-size: 15px; padding: 4px 10px; border: 1px solid currentColor; }
+.confianca-rotulo.conf-baixa { color: var(--conf-baixa); }
+.confianca-rotulo.conf-media { color: var(--conf-media); }
+.confianca-rotulo.conf-alta  { color: var(--conf-alta); }
+
+/* botoes fixos, canto superior direito */
+.top-ui { position: fixed; top: 24px; right: 24px; display: flex; gap: 2px; }
+.top-ui button {
+  background: #050505; color: var(--magenta); border: 2px dotted var(--vermelho);
+  font-family: inherit; font-size: 13px; padding: 10px 16px; cursor: pointer;
+}
+.top-ui button:hover { background: #1a0510; }
+
+/* o retangulo de cena - so texto de historia entra aqui dentro */
+.cena { border-width: 2px; padding: 26px 34px; margin-top: 10px; }
+.cena h2 { margin-top: 0; }
+.cena .linha { margin: 16px 0; }
+.cena.combate { border-style: dotted; border-color: var(--vermelho); }
+.cena.puzzle { border-style: dotted; border-color: var(--amarelo); }
+.cena.furtividade { border-style: dashed; border-color: var(--branco); }
+.tipo-label { font-size: 12px; opacity: .7; }
