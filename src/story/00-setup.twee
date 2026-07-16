@@ -100,7 +100,6 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
 
 :: Widgets [widget nobr]
 <<widget "encontrarArma">>
-    /* Seta os detalhes da arma */
     <<set _nome = $args[0]>>
     <<set _descricao = $args[1]>>
     <<set _numDados = $args[2]>>
@@ -109,7 +108,8 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     <<set _multCritico = $args[5] || 2>>
     <<set _modificadorAtaque = $args[6] || 0>>
 
-    <<set setup.armaEncontrada = {
+    /* 1. Criamos um objeto local para a arma em vez de usar o setup global */
+    <<set _armaObj = {
         nome: _nome,
         numDados: _numDados,
         tipoDado: _tipoDado,
@@ -118,62 +118,89 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
         modificadorAtaque: _modificadorAtaque
     }>>
 
-    Você encontra _nome: _descricao (Dano: _numDados dados de _tipoDado lados, crítico _margemCritico, x _multCritico, + _modificadorAtaque em testes de ataque). Gostaria de equipar?
-    <span id="decisao-equipar"> 
-        <<link "Sim">>
-            <<if $player.equipamento.arma !== null>> /* se o jogador tiver uma arma equipada */
-                <<run $player.inventario.push($player.equipamento.arma)>>
-            <</if>>
-            <<set $player.equipamento.arma = setup.armaEncontrada>>
-            <<replace "#decisao-equipar">>Você equipou _nome.<</replace>>
-        <</link>>
-        <<link "Não">>
-            <<run $player.inventario.push(setup.armaEncontrada)>>
-            <<replace "#decisao-equipar">>Você guardou _nome no seu inventário.<</replace>>
-        <</link>>
+    <<set _idUnico = "decisao-" + _nome.replace(/\s+/g, '-')>>
+
+    Você encontra _nome: _descricao (Dano: _numDados d_tipoDado, crítico _margemCritico, x_multCritico, +_modificadorAtaque em testes de ataque). Gostaria de equipar?
+    
+    <span @id="_idUnico"> 
+        /* 2. CONGELAMOS AS VARIÁVEIS COM O CAPTURE */
+        <<capture _idUnico, _nome, _armaObj>>
+            <<link "Sim">>
+                <<if $player.equipamento.arma !== null>>
+                    <<run $player.inventario.push($player.equipamento.arma)>>
+                <</if>>
+                <<set $player.equipamento.arma = _armaObj>>
+                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if $player.equipamento.arma !== null>> A antiga foi para o inventário.<</if>><</replace>>
+            <</link>> | 
+            <<link "Não">>
+                <<run $player.inventario.push(_armaObj)>>
+                <<replace `"#"+_idUnico`>>Você guardou _nome no seu inventário.<</replace>>
+            <</link>>
+        <</capture>>
     </span>
 <</widget>>
 
 <<widget "encontrarArmadura">>
-    /* Seta os detalhes da armadura */
     <<set _nome = $args[0]>>
     <<set _descricao = $args[1]>>
     <<set _resistencia = $args[2]>>
     <<set _esquiva = $args[3] || 0>>
 
-    <<set setup.armaduraEncontrada = {
+    /* 1. Criamos um objeto local para a armadura */
+    <<set _armaduraObj = {
         nome: _nome,
         descricao: _descricao,
         resistencia: _resistencia,
         esquiva: _esquiva
     }>>
 
-    Você encontra _nome: _descricao (Resistência: - _resistencia de dano recebido; + _esquiva de esquiva). Gostaria de equipar?
-    <span id="decisao-equipar"> 
-        <<link "Sim">>
-            <<if $player.equipamento.armadura !== null>> /* Se o jogador tiver alguma armadura equipada */
-                <<run $player.inventario.push($player.equipamento.armadura)>>
-            <</if>>
-            <<set $player.equipamento.armadura = setup.armaduraEncontrada>>
-            <<replace "#decisao-equipar">>Voce equipou _nome.<</replace>>
-        <</link>>
-        <<link "Não">>
-            <<run $player.inventario.push(setup.armaduraEncontrada)>>
-            <<replace "#decisao-equipar">>Voce guardou _nome no seu inventário.<</replace>>
-        <</link>>
+    <<set _idUnico = "decisao-" + _nome.replace(/\s+/g, '-')>>
+
+    Você encontra _nome: _descricao (Resistência: -_resistencia de dano recebido; +_esquiva de esquiva). Gostaria de equipar?
+    
+    <span @id="_idUnico"> 
+        /* 2. CONGELAMOS AS VARIÁVEIS COM O CAPTURE */
+        <<capture _idUnico, _nome, _armaduraObj>>
+            <<link "Sim">>
+                <<if $player.equipamento.armadura !== null>>
+                    <<run $player.inventario.push($player.equipamento.armadura)>>
+                <</if>>
+                <<set $player.equipamento.armadura = _armaduraObj>>
+                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if $player.equipamento.armadura !== null>> A antiga foi para o inventário.<</if>><</replace>>
+            <</link>> | 
+            <<link "Não">>
+                <<run $player.inventario.push(_armaduraObj)>>
+                <<replace `"#"+_idUnico`>>Você guardou _nome no seu inventário.<</replace>>
+            <</link>>
+        <</capture>>
     </span>
 <</widget>>
 
 <<widget "encontrarItem">>
     <<set _nome = $args[0]>>
     <<set _descricao = $args[1]>>
-    <<set _quantidade = $args[2]>>
-    <<run $player.inventario.push({
-        nome: _nome,
-        descricao: _descricao,
-        quantidade: _quantidade
-    })>>
-    Você encontra _quantidade _nome: _descricao. 
+    <<set _quantidade = $args[2] || 1>>
+    <<set _itemExiste = false>>
+
+    /* Percorre o inventário procurando se já existe um item com o mesmo nome */
+    <<for _i = 0; _i < $player.inventario.length; _i++>>
+        <<if $player.inventario[_i].nome === _nome>>
+            <<set $player.inventario[_i].quantidade += _quantidade>>
+            <<set _itemExiste = true>>
+            <<break>> /* Encontrou, atualizou e parou o loop */
+        <</if>>
+    <</for>>
+
+    /* Se o loop acabou e o item não existia no inventário, adiciona um novo */
+    <<if not _itemExiste>>
+        <<run $player.inventario.push({
+            nome: _nome,
+            descricao: _descricao,
+            quantidade: _quantidade
+        })>>
+    <</if>>
+    
+    Você encontra x_quantidade _nome: _descricao. 
 <</widget>>
 
 <<widget "usarItem">>
