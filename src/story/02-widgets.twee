@@ -132,7 +132,7 @@
             <<set $player.esquiva += 1>>
             <<replace "#decisao-atributo">>Você melhorou sua destreza.<</replace>>
         <</link>>
-        <<link "Intelecto: +1 dado em testes de intelecto">>
+        <<link "Intelecto: +1 dado em testes de intelecto, +1 de modificador em testes de intelecto">>
             <<set $player.atributos.int += 1>>
             <<replace "#decisao-atributo">>Você melhorou seu intelecto.<</replace>>
         <</link>>
