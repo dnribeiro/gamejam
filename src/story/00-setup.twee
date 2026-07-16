@@ -79,7 +79,7 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     inventario: [],
     keyItems: [],
     skills: [],
-    confianca: []
+    confianca: 0
 }>>
 
 <<set $player.hp = 50 + 10 * $player.atributos.vig>>
