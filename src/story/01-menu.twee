@@ -1,0 +1,109 @@
+:: MenuPrincipal
+<div style="text-align: center; margin-top: 10%;">
+    <h1>SEHANCTUS</h1>
+    <h3>Painel de Desenvolvimento & Testes</h3>
+    
+    [[Entrar na Sala de Debug|SalaDebug]]
+</div>
+
+:: SalaDebug [nobr]
+<h2>🧪 Sala de Testes — Sehanctus</h2>
+<hr>
+
+<!-- 1. PAINEL DE STATUS EM TEMPO REAL -->
+<div id="status-painel" style="background: #111; padding: 15px; border: 1px solid #333; margin-bottom: 20px;">
+    <h3>📊 Status do Player</h3>
+    * **Nível:** $player.nivel <br>
+    * **HP:** $player.hp / $player.maxHp <br>
+    * **Esquiva:** $player.esquiva <br>
+    * **Confiança:** $player.confianca <br>
+    * **Atributos:** 
+        * Força (STR): $player.atributos.str | Vigor (VIG): $player.atributos.vig | Destreza (DEX): $player.atributos.dex | Intelecto (INT): $player.atributos.int | Sorte (LUCK): $player.atributos.luck
+    <br>
+    * **Arma Equipada:** <<if $player.equipamento.arma !== null>>$player.equipamento.arma.nome (Dano: $player.equipamento.arma.numDados""d""$player.equipamento.arma.tipoDado, Crítico: $player.equipamento.arma.margemCritico, x$player.equipamento.arma.multCritico)<<else>>Nenhuma (Punhos)<</if>> <br>
+    * **Armadura Equipada:** <<if $player.equipamento.armadura !== null>>$player.equipamento.armadura.nome (Resistência: $player.equipamento.armadura.resistencia, Esquiva: +$player.equipamento.armadura.esquiva)<<else>>Nenhuma<</if>> <br>
+    * **Inventário:** 
+        <<if $player.inventario.length === 0>>
+            Vazio
+        <<else>>
+            <<for _i = 0; _i < $player.inventario.length; _i++>>
+                $player.inventario[_i].nome (x$player.inventario[_i].quantidade); 
+            <</for>>
+        <</if>>
+</div>
+
+<!-- 2. BOTÃO DE SUBIR DE NÍVEL -->
+<div style="margin-bottom: 20px;">
+    <h3>📈 Testar Progressão</h3>
+    <<link "Subir de Nível (Chamar Widget)">>
+        <<replace "#zona-level-up">>
+            <<subirNivel>>
+            <br><br>
+            <<link "Atualizar Painel de Status" "SalaDebug">><</link>>
+        <</replace>>
+    <</link>>
+    <div id="zona-level-up" style="margin-top: 10px; padding-left: 15px; border-left: 3px solid #ffaa00;"></div>
+</div>
+
+<hr>
+
+<!-- 3. SPAWN DE ITENS (TESTANDO CAPTURE) -->
+<div style="margin-bottom: 20px;">
+    <h3>⚔️ Testar Encontro de Itens (Widgets)</h3>
+    <p>O <em>capture</em> impede que as escolhas de sim/não se sobreponham!</p>
+    
+    * **Arma 1:** <<encontrarArma "Espada Longa" "Uma lâmina de aço temperado" 2 6 19 2 1>> <br><br>
+    * **Arma 2:** <<encontrarArma "Pé de Cabra" "Uma ferramenta pesada de ferro" 1 8 20 3 0>> <br><br>
+    * **Armadura:** <<encontrarArmadura "Jaqueta de Couro" "Oferece proteção leve sem tirar mobilidade" 2 1>> <br><br>
+    * **Consumível:** <<encontrarItem "Poção de Vida" "Restaura 15 de HP instantaneamente" 1>>
+    <br><br>
+    <<link "Atualizar Status do Inventário/Equipamentos" "SalaDebug">><</link>>
+</div>
+
+<hr>
+
+<!-- 4. TESTE DE COMBATE E ROLAGENS -->
+<div style="margin-bottom: 20px;">
+    <h3>🎲 Simular Ações de Jogo</h3>
+    
+    <h4>A) Teste de Atributo (Ex: Furtividade - Dificuldade 15)</h4>
+    <<link "Tentar passar furtivo (Usa Destreza)">>
+        <<set _pool = setup.rollPool($player.atributos.dex)>>
+        <<set _passou = setup.calcPass(_pool, 15, 0, $player.confianca)>>
+        <<replace "#resultado-acoes">>
+            **Rolagem do Pool (DEX: $player.atributos.dex dados):** Maior valor obtido no d20 foi _pool.valor <br>
+            **Cálculo:** (_pool.valor + Modificador (0) + Confiança ($player.confianca)) >= Dificuldade (15) <br>
+            <<if _passou>>
+                💚 **SUCESSO!** Você se esgueirou pelas sombras com êxito!
+            <<else>>
+                💔 **FALHA!** Você fez barulho e chamou atenção.
+            <</if>>
+        <</replace>>
+    <</link>>
+    
+    <br><br>
+    
+    <h4>B) Rolar Ataque e Dano (Baseado na Arma Equipada)</h4>
+    <<link "Atacar Inimigo">>
+        <<set _armaUsada = $player.equipamento.arma || { nome: "Punhos", numDados: 1, tipoDado: 4, margemCritico: 20, multCritico: 2, modificadorDano: 0 }>>
+        <<set _ataque = setup.rollPool($player.atributos.str)>>
+        <<set _danoInfo = setup.calcDano(_ataque.valor, _armaUsada, 0)>>
+        
+        <<replace "#resultado-acoes">>
+            **Ataque com _armaUsada.nome:** <br>
+            * Maior D20 rolado: _ataque.valor (Sorte reduziu a margem para: <<print _armaUsada.margemCritico - Math.floor($player.atributos.luck / 2)>>)<br>
+            <<if _danoInfo.critico>>
+                💥 **CRÍTICO!** O multiplicador x_armaUsada.multCritico foi aplicado! <br>
+            <</if>>
+            * Dados de Dano Rolados: _danoInfo.dadosRolados.join(" + ") <br>
+            * **Dano Total Calculado:** _danoInfo.dano (Dados + Força ($player.atributos.str) + Modificadores)
+        <</replace>>
+    <</link>>
+    
+    <div id="resultado-acoes" style="margin-top: 15px; padding: 15px; background: #1a1a1a; border-left: 4px solid #00aaff;">
+        *Os resultados dos testes físicos e de combate vão aparecer aqui.*
+    </div>
+</div>
+
+<hr>
+[[Voltar para o Menu|MenuPrincipal]]
