@@ -163,3 +163,8 @@ body { background: #050505; }
 .cena.puzzle { border-style: dotted; border-color: var(--amarelo); }
 .cena.furtividade { border-style: dashed; border-color: var(--branco); }
 .tipo-label { font-size: 12px; opacity: .7; }
+.linha-escolhas {
+    display: flex;
+    gap: 40px;
+    margin: 16px 0;
+}
