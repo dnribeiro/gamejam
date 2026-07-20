@@ -94,6 +94,110 @@ setup.rotuloConfianca = function (valor) {
     return setup.faixasConfianca[0]; // fallback, nao deveria chegar aqui
 };
 
+// ==========================================================
+// MODO VISUAL NOVEL - digita o conteudo de .cena bloco por
+// bloco (cada .linha / .linha-escolhas / link solto), letra
+// por letra, com um botao "Proximo" fixo embaixo da tela.
+//
+// Nao mexe em nenhum outro lugar da passagem (o statusFixo,
+// por exemplo, fica de fora, ja que nao esta dentro de .cena).
+// Nao precisa ser chamado manualmente em nenhuma passagem -
+// se conecta sozinho sempre que existir um .cena na tela.
+// ==========================================================
+setup.vn = {
+    velocidade: 18 // ms por caractere
+};
+
+setup.vnAplicar = function (cenaEl) {
+    var blocos = Array.from(cenaEl.children); // .linha, .linha-escolhas, links soltos, etc
+    if (blocos.length === 0) return;
+
+    cenaEl.innerHTML = ""; // remove da tela - os nos de "blocos" continuam existindo em memoria,
+                            // com seus links e widgets intactos, so desanexados por enquanto
+
+    var botao = document.createElement("button");
+    botao.className = "vn-proximo";
+    botao.id = "vn-proximo-btn";
+    botao.innerHTML = "Próximo &raquo;";
+    document.body.appendChild(botao);
+
+    var idx = 0;
+    var digitando = false;
+    var textNodesAtual = [];
+    var ponteiro = 0;
+    var intervalo = null;
+
+    // acha, recursivamente, todo texto "de verdade" dentro de um bloco -
+    // elementos (links, spans de escolha, o que <<encontrarArma>> gerar, etc)
+    // ficam como estao, nunca sao recriados, entao continuam funcionando normalmente
+    function coletarTextNodes(el, lista) {
+        Array.from(el.childNodes).forEach(function (n) {
+            if (n.nodeType === 3 && n.textContent.trim() !== "") {
+                lista.push(n);
+            } else if (n.nodeType === 1) {
+                coletarTextNodes(n, lista);
+            }
+        });
+    }
+
+    function iniciarProximoBloco() {
+        if (idx >= blocos.length) {
+            botao.remove();
+            return;
+        }
+        var bloco = blocos[idx++];
+        cenaEl.appendChild(bloco);
+        cenaEl.scrollTop = cenaEl.scrollHeight;
+
+        textNodesAtual = [];
+        coletarTextNodes(bloco, textNodesAtual);
+        textNodesAtual.forEach(function (n) {
+            n._vnTextoCompleto = n.textContent;
+            n.textContent = "";
+        });
+
+        ponteiro = 0;
+        digitando = true;
+        intervalo = setInterval(digitarPasso, setup.vn.velocidade);
+    }
+
+    function digitarPasso() {
+        if (ponteiro >= textNodesAtual.length) {
+            clearInterval(intervalo);
+            digitando = false;
+            return;
+        }
+        var n = textNodesAtual[ponteiro];
+        var alvo = n._vnTextoCompleto;
+        if (n.textContent.length < alvo.length) {
+            n.textContent = alvo.substring(0, n.textContent.length + 1);
+            cenaEl.scrollTop = cenaEl.scrollHeight;
+        } else {
+            ponteiro++;
+        }
+    }
+
+    botao.addEventListener("click", function () {
+        if (digitando) {
+            // pula pro final do bloco atual
+            clearInterval(intervalo);
+            textNodesAtual.forEach(function (n) { n.textContent = n._vnTextoCompleto; });
+            digitando = false;
+        } else {
+            iniciarProximoBloco();
+        }
+    });
+
+    iniciarProximoBloco();
+};
+
+// conecta o modo VN automaticamente sempre que uma passagem termina de renderizar
+$(document).on(":passagedisplay", function () {
+    $("#vn-proximo-btn").remove(); // limpa o botao da passagem anterior, se sobrou algum
+    var cenaEl = document.querySelector("#passages .cena");
+    if (cenaEl) setup.vnAplicar(cenaEl);
+});
+
 :: StoryInit
 <<set $player = {
     nivel: 1,
@@ -157,7 +261,14 @@ body { background: #050505; }
 .top-ui button:hover { background: #1a0510; }
 
 /* o retangulo de cena - so texto de historia entra aqui dentro */
-.cena { border-width: 2px; padding: 26px 34px; margin-top: 10px; }
+.cena {
+  border-width: 2px;
+  padding: 26px 34px;
+  margin-top: 10px;
+  height: 82vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
 .cena h2 { margin-top: 0; }
 .cena .linha { margin: 16px 0; }
 .cena.combate { border-style: dotted; border-color: var(--vermelho); }
@@ -170,3 +281,20 @@ body { background: #050505; }
     gap: 40px;
     margin: 16px 0;
 }
+
+/* botao fixo de "Proximo" do modo visual novel */
+.vn-proximo {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #050505;
+  color: var(--magenta);
+  border: 2px dotted var(--vermelho);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 12px 30px;
+  cursor: pointer;
+  z-index: 100;
+}
+.vn-proximo:hover { background: #1a0510; }

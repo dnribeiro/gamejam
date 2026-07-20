@@ -3,10 +3,10 @@
     <div class="linha"> 
         Você escuta o som do despertador. Hora de despertar para mais um dia na rotina, mais um dia se desgastando para tentar garantir um amanhã que ainda nem existe.
         Seus olhos resistem a se abrir, mas o som repetitivo do alarme começa a te dar nos nervos. Porém, sempre há uma escolha numa situação dessa.
-    </div>
-    <div class="linha-escolhas"> 
-        <span>>[[Ativar modo soneca|Soneca]]</span>
-        <span>>[[Acordar|Acordar]]</span>
+        <div class="linha-escolhas"> 
+            <span>>[[Ativar modo soneca|Soneca]]</span>
+            <span>>[[Acordar|Acordar]]</span>
+        </div>
     </div>
 </div>
 
@@ -30,10 +30,10 @@
         É um pequeno apartamento, mas é o seu lar. Um quarto, um banheiro, uma sala e uma cozinha, por isso você consegue manter ele bem limpo e arrumado apesar do desgaste físico e mental que o trabalho te causa. Apesar disso, você consegue ver algumas louças do dia anterior ainda esperando para serem lavadas dentro da pia.
         Você põe a mão nos bolsos da sua calça jeans. Chaves, carteira, cartão do GBVus, tudo ok.
         Você vê seu gato passeando pela casa. Aparentemente, nem os animais escapam da rotina da vida. Ele vem em sua direção e se esfrega em suas pernas.
-    </div>
-    <div class="linha-escolhas"> 
-        <span>>[[Ir trabalhar|TrabalhoAtrasado]]</span>
-        <span>>[[Fazer carinho no gato|TrabalhoBonus]]</span>
+        <div class="linha-escolhas"> 
+            <span>>[[Ir trabalhar|TrabalhoAtrasado]]</span>
+            <span>>[[Fazer carinho no gato|TrabalhoBonus]]</span>
+        </div>
     </div>
 </div>
 
@@ -49,10 +49,10 @@
         É um pequeno apartamento, mas é o seu lar. Um quarto, um banheiro, uma sala e uma cozinha, por isso você consegue manter ele bem limpo e arrumado apesar do desgaste físico e mental que o trabalho te causa. Apesar disso, você consegue ver algumas louças do dia anterior ainda esperando para serem lavadas dentro da pia.
         Você põe a mão nos bolsos da sua calça jeans. Chaves, carteira, cartão do GBVus, tudo ok.
         Você vê seu gato passeando pela casa. Aparentemente, nem os animais escapam da rotina da vida. Ele vem em sua direção e se esfrega em suas pernas.
-    </div>
-    <div class="linha-escolhas"> 
-        <span>>[[Ir trabalhar|Trabalho]]</span>
-        <span>>[[Fazer carinho no gato|TrabalhoBonus]]</span>
+        <div class="linha-escolhas"> 
+            <span>>[[Ir trabalhar|Trabalho]]</span>
+            <span>>[[Fazer carinho no gato|TrabalhoBonus]]</span>
+        </div>
     </div>
 </div>
 
@@ -151,14 +151,24 @@
         Você tenta mexer seu braço, mas ele não responde. Não parece que sua perna se mexe também. Na verdade, você não aparenta ter controle nenhum sobre seu corpo.
         O terror e a ansiedade começam a tomar conta da sua mente. "O que está acontecendo comigo?" você pensa. "Deve ser algum tipo de paralisia do sono, tem que ser", você pensa para tentar se acalmar, mas a confusão em sua mente ofusca toda tentativa de pensamento lógico no momento.
         De repente, as luzes cessam, e você percebe a presença de duas pessoas entrando na cabana. Você sente todo seu corpo formigando, o que já é melhor que não sentir nada.
+    </div>
+    <div class="linha">
         - Será que deu certo? - diz uma das figuras, com uma voz mais aguda, que aparenta ser uma voz de criança
         - Parece que sim. Bom, ao menos o corpo artificial foi construído. Toma cuidado, Liz, a gente não sabe como isso vai agir daqui em diante. Deve estar assustado. - é o que se pode escutar da voz grossa que acompanha a outra.
+    </div>
+    <div class="linha">
         Você escuta passos se aproximando, e vê uma figura alta e uma pequena. Ambas vestem mantos pretos que cobrem todos seus corpos e seus rostos, com detalhes em cinza, verde e roxo. A figura menor se mantém atrás das pernas da maior, parecendo preparada para fugir ou se esconder.
+    </div>
+    <div class="linha">
         - Olá - diz a voz grave - Você deve estar muito confuso agora, e nós entendemos de verdade.
         Você tenta abrir a boca para falar, mas sente que ainda não tem forças para isso
         - Imagino que ainda esteja se acostumando com esse corpo. Nos desculpe por isso, de verdade, mas estamos bem desesperados. - ele continua - Vou tentar explicar a situação o mais rápido possível.
+    </div>
+    <div class="linha">
         - Você está em Sehanctus, uma serra mágica que costumava ser nosso lar. Eu sou Roy, e essa é a Elizabeth. Há alguns anos, um bruxo chamado Maanti chegou aqui e começou a devastar o lugar. Na sua busca por mais poder, começou a conduzir experimentos em segredo nas criaturas e nas pessoas que aqui viviam. Quando descobrimos, já era tarde, Maanti já havia feito controle mental e sabe-se lá mais o que para transformar a vida aqui em seu exército particular.
         - O problema é que a sede de poder dele é imparável, e ele está se sentindo estagnado aqui em Sehanctus, o que fez com que ele esteja buscando uma magia capaz de abrir portais e colidir universos a fim de expandir o império que ele estabeleceu e se tornar mais poderoso. E nós não podíamos ficar calados diante disso tudo, mas só quem sobrou da resistência foram eu e a Liz. Vários videntes tentaram ter esperança em profecias, mas nunca nenhuma sequer foi revelada a eles.
+    </div>
+    <div class="linha">
         - Foi então que a gente decidiu tentar fabricar um guerreiro imparável. Um boneco de guerra, desenhado para combater Maantis e impedir esse ritual de colisão. Porém, um boneco assim era frágil e manipulável sem uma alma forte que pudesse agir por meio dele. E é aí que você entra.
         - Na verdade... me desculpa, acho que está sendo muito para você. Consegue se levantar?
         <div class="linha-escolhas" id="001"> 
@@ -175,6 +185,8 @@
                 <</replace>>
             <</link>> </span>
         </div>
+    </div>
+    <div class="linha">
         - Não se preocupe com seu corpo real e sua mente. Eles serão inafetados com o que acontece aqui em Sehanctus. Esse seu corpo atual é um receptáculo da sua consciência constituído de Vigor (o quanto ele vai aguentar antes de quebrar), Força, Destreza (habilidade em fazer coisas rápido), Intelecto e também é imbuído com a magia da Sorte. - É a primeira vez que você escuta a voz da Elizabeth. - Alguma dúvida?
         <div class="linha-escolhas" id="002"> 
             <span> <<link "> Mas... eu nunca disse que ia ajudar. Por que eu ajudaria vocês?">>
@@ -194,20 +206,28 @@
                 <</replace>>
             <</link>> </span>
         </div>
+    </div>
+    <div class="linha">
         - Só uma última coisa: Você poderá ser um herói de Sehanctus e também do seu próprio mundo, que, se o feitiço de Maantis se realizar, seria uma questão de tempo até o seu mundo colidir com o império de Maantis, mas a gente imagina que ninguém do seu mundo vá acreditar em você. Porém, damos nossa palavra de que, se conseguirmos salvar Sehanctus e o seu mundo, nenhum habitante daqui jamais esquecerá de você. - continua Roy.
         - Aqui, preparamos pra você uma espada e um manto como o nosso, para te ajudar a se esconder. Também temos umas poções de recuperação, é só usar se sentir que está perto de quebrar. - avisa Liz
         Você olha ao redor, e vê as janelas da cabana totalmente fechadas, e o ambiente é iluminado pelos pequenos buracos quebrados no telhado e nas paredes da cabana. O brilho azul nos veios da madeira também iluminam um pouco o ambiente, e você percebe uma névoa fina que cobre todo o lugar. No chão, onde você estava deitado, há um círculo mágico desenhado, agora sem cor, mas você supõe que era ele que estava produzindo todas as luzes coloridas que você viu. O lugar parece estar repleto de outros rabiscos de giz branco, provavelmente planejamentos de como realizar o feitiço, e há pergaminhos por todo lado.
         Você vê Liz e Roy indo para a porta, onde param e te esperam. Ao lado deles, está o equipamento que te indicaram. Você se levanta e vai em direção a eles.
-
+    </div>
+    <div class="linha">
         <<encontrarArma "Espada Reta" "Uma espada reta comum, como nos filmes medievais que você já viu. Sua lâmina prateada parece estar bem afiada, e a empunhadura é confortável de usar." 1 10>>
-        
+    </div>
+    <div class="linha"> 
         <<encontrarArmadura "Manto Mágico" "Um manto longo negro e com detalhes em cinza, roxo e verde para se misturar à vegetação que cobre seu corpo todo." 2 1>>
-        
+    </div>
+    <div class="linha">
         <<encontrarItem "Poção de vida" "Líquido vermelho mágico guardado em um pequeno frasco de vidro tampado por uma rolha. Um uso recupera 20 pontos de vida." 3>>
-
+    </div>
+    <div class="linha">
         Vocês então saem da cabana e você finalmente pode ver melhor o lugar em que você está. É uma floresta de árvores de madeira escura em um tom de cinza, e entre as cascas é possível ver um brilho azulado. As folhas variam em tons de azul, roxo e rosa, e, vendo o tom alaranjado do céu, parece que o sol está para se pôr. 
         Vocês caminham por uma trilha que se revela em meio à grama e aos arbustos, que têm tons vibrantes de verde e muitas flores coloridas, e some conforme vocês já atravessaram ela. Roy e Liz parecem cautelosos com cada passo que dão, sempre olhando para os lados e para trás. Você pode ver pequenos insetos estranhos, alguns brilhantes, outros do tamanho da sua mão, e parece que há uma névoa baixa e fina em toda a floresta, assim como na cabana. Você pode perceber um tom arroxeado nessa névoa, olhando melhor. Pássaros também são vistos, mas você estranha o clima pacífico que a floresta traz.
         Você segue a dupla por mais um tempo, até que o sol finalmente se põe, mas o caminho onde vocês estão segue iluminado. Ninguém falou uma palavra desde que vocês saíram da cabana, e, a julgar pela tensão deles, você imagina que não seja a hora de comentar nada. Novamente, a aparência pacífica da floresta te causa um estranhamento, algo tão normal e bonito assim não deveria estar sendo real em um mundo onde tem um ditador bruxo maluco transformando seres em monstros à vontade.
+    </div>
+    <div class="linha">
         [[Continuar|Stealth1]]
     </div>
 </div>
