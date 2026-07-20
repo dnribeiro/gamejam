@@ -61,11 +61,12 @@
         /* 2. CONGELAMOS AS VARIÁVEIS COM O CAPTURE */
         <<capture _idUnico, _nome, _armaObj>>
             <<link "Sim">>
+                _armaAntiga = $player.equipamento.arma
                 <<if $player.equipamento.arma !== null>>
                     <<run $player.inventario.push($player.equipamento.arma)>>
                 <</if>>
                 <<set $player.equipamento.arma = _armaObj>>
-                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if $player.equipamento.arma !== null>> A antiga foi para o inventário.<</if>><</replace>>
+                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if _armaAntiga !== undefined>> A antiga foi para o inventário.<</if>><</replace>>
             <</link>> | 
             <<link "Não">>
                 <<run $player.inventario.push(_armaObj)>>
@@ -97,12 +98,13 @@
         /* 2. CONGELAMOS AS VARIÁVEIS COM O CAPTURE */
         <<capture _idUnico, _nome, _armaduraObj>>
             <<link "Sim">>
+                _armaduraAntiga = $player.equipamento.armadura
                 <<if $player.equipamento.armadura !== null>>
                     <<run $player.inventario.push($player.equipamento.armadura)>>
                 <</if>>
                 <<set $player.equipamento.armadura = _armaduraObj>>
-                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if $player.equipamento.armadura !== null>> A antiga foi para o inventário.<</if>><</replace>>
-            <</link>> | 
+                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if _armaduraAntiga !== undefined>> A antiga foi para o inventário.<</if>><</replace>>
+            <</link>> |
             <<link "Não">>
                 <<run $player.inventario.push(_armaduraObj)>>
                 <<replace `"#"+_idUnico`>>Você guardou _nome no seu inventário.<</replace>>
