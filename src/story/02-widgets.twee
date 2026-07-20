@@ -61,12 +61,12 @@
         /* 2. CONGELAMOS AS VARIÁVEIS COM O CAPTURE */
         <<capture _idUnico, _nome, _armaObj>>
             <<link "Sim">>
-                _armaAntiga = $player.equipamento.arma
+                <<run _armaAntiga = $player.equipamento.arma>>
                 <<if $player.equipamento.arma !== null>>
                     <<run $player.inventario.push($player.equipamento.arma)>>
                 <</if>>
                 <<set $player.equipamento.arma = _armaObj>>
-                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if _armaAntiga !== undefined>> A antiga foi para o inventário.<</if>><</replace>>
+                <<replace `"#"+_idUnico`>>Você equipou _nome.<<if _armaAntiga !== null>> A antiga foi para o inventário.<</if>><</replace>>
             <</link>> | 
             <<link "Não">>
                 <<run $player.inventario.push(_armaObj)>>
