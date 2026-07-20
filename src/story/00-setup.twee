@@ -161,6 +161,7 @@ body { background: #050505; }
 .cena .linha { margin: 16px 0; }
 .cena.combate { border-style: dotted; border-color: var(--vermelho); }
 .cena.puzzle { border-style: dotted; border-color: var(--amarelo); }
+.cena.normal { border-style: dotted; border-color: var(--branco); }
 .cena.furtividade { border-style: dashed; border-color: var(--branco); }
 .tipo-label { font-size: 12px; opacity: .7; }
 .linha-escolhas {
