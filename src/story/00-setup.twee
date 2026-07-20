@@ -123,6 +123,7 @@ setup.rotuloConfianca = function (valor) {
   --vermelho: #d81f2a;
   --amarelo: #e8c81e;
   --branco: #f0f0f0;
+  --azul: #0061fe;
   --conf-baixa: #888;
   --conf-media: #4fb0e8;
   --conf-alta: #e8c81e;
@@ -161,7 +162,7 @@ body { background: #050505; }
 .cena .linha { margin: 16px 0; }
 .cena.combate { border-style: dotted; border-color: var(--vermelho); }
 .cena.puzzle { border-style: dotted; border-color: var(--amarelo); }
-.cena.normal { border-style: dotted; border-color: var(--branco); }
+.cena.normal { border-style: dotted; border-color: var(--azul); }
 .cena.furtividade { border-style: dashed; border-color: var(--branco); }
 .tipo-label { font-size: 12px; opacity: .7; }
 .linha-escolhas {
