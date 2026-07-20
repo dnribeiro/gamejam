@@ -1,0 +1,213 @@
+:: Inicio
+<div class="cena normal">
+    <div class="linha"> 
+        Você escuta o som do despertador. Hora de despertar para mais um dia na rotina, mais um dia se desgastando para tentar garantir um amanhã que ainda nem existe.
+        Seus olhos resistem a se abrir, mas o som repetitivo do alarme começa a te dar nos nervos. Porém, sempre há uma escolha numa situação dessa.
+    </div>
+    <div class="linha-escolhas"> 
+        <span>>[[Ativar modo soneca|Soneca]]</span>
+        <span>>[[Acordar|Acordar]]</span>
+    </div>
+</div>
+
+:: Soneca
+<div class="cena normal"> 
+    <div class="linha"> 
+        Você cede ao cansaço e decide fechar os olhos mais um pouco. 
+        .
+        .
+        .
+        10 minutos se passam, o alarme toca de novo. Você enrola um pouco na cama, mas sente um peso em seu peito.
+    </div>
+    <div class="linha"> 
+        Você abre os olhos e vê o seu gato, visivelmente incomodado com a repetição do alarme.
+        Ele percebe que você acordou e começa a ronronar e andar de um lado para o outro em cima da cama, parecendo procurar um cantinho mais quente e confortável.
+        Você então se levanta e começa a se arrumar para o trabalho. Mais um dia tomando uma xícara de café preto com um pouco de adoçante para disfarçar o gosto amargo deixado pela torra escura, depois tomando um banho frio e escovando os dentes.
+        "Preciso comprar mais pasta de dente." você pensa, enquanto espreme o tubo que já está nas últimas.
+    </div>
+    <div class="linha"> 
+        Você termina de se arrumar e dá uma última olhada no apartamento que você mora, em busca de algo que possa ter sido esquecido.
+        É um pequeno apartamento, mas é o seu lar. Um quarto, um banheiro, uma sala e uma cozinha, por isso você consegue manter ele bem limpo e arrumado apesar do desgaste físico e mental que o trabalho te causa. Apesar disso, você consegue ver algumas louças do dia anterior ainda esperando para serem lavadas dentro da pia.
+        Você põe a mão nos bolsos da sua calça jeans. Chaves, carteira, cartão do GBVus, tudo ok.
+        Você vê seu gato passeando pela casa. Aparentemente, nem os animais escapam da rotina da vida. Ele vem em sua direção e se esfrega em suas pernas.
+    </div>
+    <div class="linha-escolhas"> 
+        <span>>[[Ir trabalhar|TrabalhoAtrasado]]</span>
+        <span>>[[Fazer carinho no gato|TrabalhoBonus]]</span>
+    </div>
+</div>
+
+:: Acordar
+<div class="cena normal">
+    <div class="linha"> 
+        Você se levanta e, apesar de sonolento, começa a sua rotina matutina para se preparar para mais um dia de trabalho.
+        Você prepara uma xícara de café preto com um pouco de adoçante para disfarçar o gosto amargo deixado pela torra escura, toma um banho frio e escova os dentes.
+        Uma coisa você percebe e se sente grato pelo cansaço: você está tão cansado que apenas se preocupa com o agora. Sem a ansiedade de lembrar do aluguel, das contas, sem planos muito complexos. A manhã é realmente um dos poucos momentos onde você pode focar no presente.
+    </div>
+    <div class="linha"> 
+        Você termina de se arrumar e dá uma última olhada no apartamento que você mora, em busca de algo que possa ter sido esquecido.
+        É um pequeno apartamento, mas é o seu lar. Um quarto, um banheiro, uma sala e uma cozinha, por isso você consegue manter ele bem limpo e arrumado apesar do desgaste físico e mental que o trabalho te causa. Apesar disso, você consegue ver algumas louças do dia anterior ainda esperando para serem lavadas dentro da pia.
+        Você põe a mão nos bolsos da sua calça jeans. Chaves, carteira, cartão do GBVus, tudo ok.
+        Você vê seu gato passeando pela casa. Aparentemente, nem os animais escapam da rotina da vida. Ele vem em sua direção e se esfrega em suas pernas.
+    </div>
+    <div class="linha-escolhas"> 
+        <span>>[[Ir trabalhar|Trabalho]]</span>
+        <span>>[[Fazer carinho no gato|TrabalhoBonus]]</span>
+    </div>
+</div>
+
+:: TrabalhoBonus
+<<set $player.confianca += 1>>
+<<goto "Trabalho">>
+
+:: Trabalho
+<div class="cena normal"> 
+    <<if $player.confianca === 1>>
+        <div class="linha"> 
+            Você se sente mais confiante pro trabalho hoje.
+        </div>
+    <</if>>
+    <div class="linha"> 
+        Você sai de casa e caminha em direção ao ponto de ônibus que você sempre pega pra ir trabalhar, o circular 852.
+        O céu está azul com poucas nuvens, e o calor do sol esquenta sua pele, como é de costume na cidade da Serra, no Espírito Santo. "Está um dia lindo para aproveitar a praia ou a piscina", você pensa.
+        Você chega no ponto, e, apesar de cheio, você sabe que não são todos que conhecem a rota do 852, e por isso ele quase sempre está vazio. É o que você sempre diz, em tom de brincadeira com fundo de verdade: "Um ônibus vazio, alem de paz de espírito, faz a gente chegar mais rápido onde a gente precisa".
+        Você então espera a chegada do seu transporte.
+        .
+        .
+        .
+        .
+        .
+        O ônibus chega. Você dá bom dia ao motorista, passa seu cartão GBVus e atravessa a catraca. Você passa por uma senhora jogando no Jogo da Oncinha e alguns jovens estudantes discutindo sobre a entrega de trabalhos universitários. Você escuta de relance eles mencionando coisas como "A nota de álgebra linear", "prova de redes" e outros termos técnicos que você não chega nem perto de entender.
+        Como sempre, você se dirige aos assentos do fundo perto da porta, liga seus fones de ouvido e vai escutando seu álbum favorito do Radioface, "OK Smartphone".
+    </div>
+    <div class="linha"> 
+        Passados alguns minutos, você finalmente chega no Pop's Manguinhos, seu lugar de trabalho. 
+        O movimento hoje está normal, como costuma ser, com apenas alguns estudantes das faculdades ao lado ou outros trabalhadores da região vindo. 
+        Mesmo odiando acordar cedo, os turnos da manhã são bem tranquilos e, por isso, você consegue tirar um tempo para estudar de vez em quando.
+    </div>
+    <div class="linha"> 
+        Depois de horas de tédio e trabalho repetitivo, finalmente é seu horário de saída. 
+        Você arruma suas coisas e parte pra faculdade.
+        Essa rotina é tão desgastante, e você sente que os professores não fazem mais do que você é capaz de fazer estudando sozinho, mas infelizmente a sua faculdade cobra presença obrigatória para aprovar as matérias.
+        O cansaço atinge seu corpo durante as aulas, mas você consegue se manter acordado para assinar às listas de presença.
+        Enfim, acabam as aulas, e você encara mais uma vez o ônibus vindo, e você volta para casa.
+    </div>
+    [[Começar|Sehanctus]]
+</div>
+
+:: TrabalhoAtrasado
+<div class="cena normal"> 
+    <div class="linha"> 
+        Você sai de casa e caminha em direção ao ponto de ônibus que você sempre pega pra ir trabalhar, o circular 852.
+        O céu está azul com poucas nuvens, e o calor do sol esquenta sua pele, como é de costume na cidade da Serra, no Espírito Santo. "Está um dia lindo para aproveitar a praia ou a piscina", você pensa.
+        Você chega no ponto, apenas para ver o ônibus, que passa a cada hora, fechando as portas e seguindo viagem.
+        Você então se vê sem opção para não chegar atrasado a não ser pegar o próximo que vier.
+        .
+        .
+        .
+        Passam 5 minutos e chega um ônibus duplo da linha 551, completamente cheio. As pessoas no ponto se degladiam para tentar entrar mais rápido na esperança de garantir um assento, mas você não tem energia pra participar dessa disputa e aceita que vai ter que ir de pé.
+        Você se espreme entre uns adolescentes que estão indo à praia conversando alto, outros trabalhadores com caras de cansados, umas outras pessoas que parecem ter esquecido de passar desodorante hoje, idosos assistindo vídeos no celular com o volume máximo, enquanto uma criança chora ao fundo com sua mãe. 
+        Na esperança de silenciar a quantidade de ruído ao seu redor, você pega seu celular e tenta ligar seu fone para escutar o álbum "The White Parade" da banda "My Physical Romance", apenas para perceber que se esqueceu de carregar seu fone na noite passada.
+    </div>
+    <div class="linha"> 
+        Depois de muitas paradas em outros pontos para que as pessoas embarquem e desembarquem do ônibus, você finalmente chega ao Pop's Manguinhos, seu lugar de trabalho, apenas para ver que está atrasado.
+        Seu gerente percebe, e não parece muito contente com seu atraso. Ele fica o resto do dia mais vigilante quanto às suas ações, o que impede que você estude para a faculdade mesmo sem muito movimento.
+        Durante o seu turno, você atende majoritariamente alguns estudantes das faculdades ao lado ou outros trabalhadores da região, mas mesmo o movimento não sendo grande, a pressão do seu gerente te desgasta mais que o normal.
+    </div>
+    <div class="linha"> 
+        Depois de horas de tédio e trabalho repetitivo, finalmente é seu horário de saída. 
+        Você arruma suas coisas e parte pra faculdade.
+        Essa rotina é tão desgastante, e você sente que os professores não fazem mais do que você é capaz de fazer estudando sozinho, mas infelizmente a sua faculdade cobra presença obrigatória para aprovar as matérias.
+        O cansaço atinge seu corpo durante as aulas, mas você consegue se manter acordado para assinar às listas de presença.
+        Enfim, acabam as aulas, e você encara mais uma vez o ônibus vindo, e você volta para casa.
+    </div>
+    <div class="linha"> 
+        Você chega em casa e é recebido pelo seu gato, se esfregando em suas pernas como se te dissesse "Boas vindas".
+        Sua energia dura o suficiente para cuidar dele, tomar banho e fazer sua última refeição do dia. Você sente seu corpo pesado, e apaga assim que deita na cama.
+    </div>
+    [[Começar|Sehanctus]]
+</div>
+
+:: Sehanctus
+<<statusFixo>>
+<div class="cena normal"> 
+    <div class="linha"> 
+        Enquanto você ainda está de olhos fechados, você sente algo diferente. Parece que você está num lugar cheio de luzes, de várias cores diferentes. Você percebe essas luzes como se estivessem piscando, alternando entre vermelho, verde, roxo, azul, laranja e amarelo.
+        Pensamentos de "Será que estou adoecendo? Devo estar delirando..." começam a passar pela sua cabeça. 
+        Você começa a ouvir vozes à distância, mas não consegue distinguir bem o que dizem.
+        <div class="linha-escolhas"> 
+            <span>>[[Abrir os olhos|AbrirOlhos]]</span>
+        </div>
+    </div>
+</div>
+
+:: AbrirOlhos
+<<statusFixo>>
+<div class="cena normal">
+    <div class="linha">
+        Você abre os olhos, e não acredita no que vê.
+        Você se encontra ainda deitado, mas o teto que está sobre você não é o mesmo teto branco liso do seu quarto, mas agora você enxerga algo que lembra um telhado de cabana, um pouco quebrado e gasto, feito de madeira escura. Você tem a impressão de essa madeira ter um brilho azulado.
+        Agora você também percebe que as luzes que sentia estão circulando pelo ar como fluxos de vento e indo em direção ao seu corpo.
+        Você tenta mexer seu braço, mas ele não responde. Não parece que sua perna se mexe também. Na verdade, você não aparenta ter controle nenhum sobre seu corpo.
+        O terror e a ansiedade começam a tomar conta da sua mente. "O que está acontecendo comigo?" você pensa. "Deve ser algum tipo de paralisia do sono, tem que ser", você pensa para tentar se acalmar, mas a confusão em sua mente ofusca toda tentativa de pensamento lógico no momento.
+        De repente, as luzes cessam, e você percebe a presença de duas pessoas entrando na cabana. Você sente todo seu corpo formigando, o que já é melhor que não sentir nada.
+        - Será que deu certo? - diz uma das figuras, com uma voz mais aguda, que aparenta ser uma voz de criança
+        - Parece que sim. Bom, ao menos o corpo artificial foi construído. Toma cuidado, Liz, a gente não sabe como isso vai agir daqui em diante. Deve estar assustado. - é o que se pode escutar da voz grossa que acompanha a outra.
+        Você escuta passos se aproximando, e vê uma figura alta e uma pequena. Ambas vestem mantos pretos que cobrem todos seus corpos e seus rostos, com detalhes em cinza, verde e roxo. A figura menor se mantém atrás das pernas da maior, parecendo preparada para fugir ou se esconder.
+        - Olá - diz a voz grave - Você deve estar muito confuso agora, e nós entendemos de verdade.
+        Você tenta abrir a boca para falar, mas sente que ainda não tem forças para isso
+        - Imagino que ainda esteja se acostumando com esse corpo. Nos desculpe por isso, de verdade, mas estamos bem desesperados. - ele continua - Vou tentar explicar a situação o mais rápido possível.
+        - Você está em Sehanctus, uma serra mágica que costumava ser nosso lar. Eu sou Roy, e essa é a Elizabeth. Há alguns anos, um bruxo chamado Maanti chegou aqui e começou a devastar o lugar. Na sua busca por mais poder, começou a conduzir experimentos em segredo nas criaturas e nas pessoas que aqui viviam. Quando descobrimos, já era tarde, Maanti já havia feito controle mental e sabe-se lá mais o que para transformar a vida aqui em seu exército particular.
+        - O problema é que a sede de poder dele é imparável, e ele está se sentindo estagnado aqui em Sehanctus, o que fez com que ele esteja buscando uma magia capaz de abrir portais e colidir universos a fim de expandir o império que ele estabeleceu e se tornar mais poderoso. E nós não podíamos ficar calados diante disso tudo, mas só quem sobrou da resistência foram eu e a Liz. Vários videntes tentaram ter esperança em profecias, mas nunca nenhuma sequer foi revelada a eles.
+        - Foi então que a gente decidiu tentar fabricar um guerreiro imparável. Um boneco de guerra, desenhado para combater Maantis e impedir esse ritual de colisão. Porém, um boneco assim era frágil e manipulável sem uma alma forte que pudesse agir por meio dele. E é aí que você entra.
+        - Na verdade... me desculpa, acho que está sendo muito para você. Consegue se levantar?
+        <div class="linha-escolhas" id="001"> 
+            <span>> <<link "> Acho que não...">> 
+                <<replace "#001">>
+                    >Acho que não...
+                    - Bom, tudo bem, os seus sentidos em breve vão estar em ordem. Então vamos terminar logo, que temos que dar o fora daqui o mais rápido possível.
+                <</replace>>
+            <</link>> </span>
+            <span>> <<link "> Me deixa tentar.">>
+                <<replace "#001">>
+                    > Me deixa tentar. Você diz enquanto faz força para levantar. Você consegue se manter sentado, por enquanto.
+                    - Vai com calma, sua mente ainda tá em adaptação ao novo corpo. Vamos terminar logo, porque temos que dar o fora daqui o mais rápido possível.
+                <</replace>>
+            <</link>> </span>
+        </div>
+        - Não se preocupe com seu corpo real e sua mente. Eles serão inafetados com o que acontece aqui em Sehanctus. Esse seu corpo atual é um receptáculo da sua consciência constituído de Vigor (o quanto ele vai aguentar antes de quebrar), Força, Destreza (habilidade em fazer coisas rápido), Intelecto e também é imbuído com a magia da Sorte. - É a primeira vez que você escuta a voz da Elizabeth. - Alguma dúvida?
+        <div class="linha-escolhas" id="002"> 
+            <span> <<link "> Mas... eu nunca disse que ia ajudar. Por que eu ajudaria vocês?">>
+                <<replace "#002">>
+                    > Mas... eu nunca disse que ia ajudar. Por que eu ajudaria vocês?
+                    - Bom... infelizmente, a gente não teve muito tempo pra refinar a magia, já que, obviamente, estamos correndo risco de morte aqui. - diz Roy
+                    - Então... a alma no boneco criado só volta para o corpo original após o objetivo ser concluído... ou se o boneco for destruído... - completa Liz
+                    > Então eu não tenho escolha? Eu só saio daqui se impedir o Mateus ou seja lá o nome do cara?
+                    - Basicamente... sim. - diz Roy - Mas você não estará sozinho. Iremos com você, e estaremos te ajudando com o que precisar, inclusive consertando o boneco se for necessário.
+                <</replace>>
+            <</link>> </span>
+
+            <span> <<link "> Não...">>
+                <<replace "#002">>
+                    > Não...
+                    - Excelente. Vamos embora daqui então. E rápido. - diz Roy
+                <</replace>>
+            <</link>> </span>
+        </div>
+        - Só uma última coisa: Você poderá ser um herói de Sehanctus e também do seu próprio mundo, que, se o feitiço de Maantis se realizar, seria uma questão de tempo até o seu mundo colidir com o império de Maantis, mas a gente imagina que ninguém do seu mundo vá acreditar em você. Porém, damos nossa palavra de que, se conseguirmos salvar Sehanctus e o seu mundo, nenhum habitante daqui jamais esquecerá de você. - continua Roy.
+        - Aqui, preparamos pra você uma espada e um manto como o nosso, para te ajudar a se esconder. Também temos umas poções de recuperação, é só usar se sentir que está perto de quebrar. - avisa Liz
+        Você olha ao redor, e vê as janelas da cabana totalmente fechadas, e o ambiente é iluminado pelos pequenos buracos quebrados no telhado e nas paredes da cabana. O brilho azul nos veios da madeira também iluminam um pouco o ambiente, e você percebe uma névoa fina que cobre todo o lugar. No chão, onde você estava deitado, há um círculo mágico desenhado, agora sem cor, mas você supõe que era ele que estava produzindo todas as luzes coloridas que você viu. O lugar parece estar repleto de outros rabiscos de giz branco, provavelmente planejamentos de como realizar o feitiço, e há pergaminhos por todo lado.
+        Você vê Liz e Roy indo para a porta, onde param e te esperam. Ao lado deles, está o equipamento que te indicaram. Você se levanta e vai em direção a eles.
+
+        <<encontrarArma "Espada Reta" "Uma espada reta comum, como nos filmes medievais que você já viu. Sua lâmina prateada parece estar bem afiada, e a empunhadura é confortável de usar." 1 10>>
+        
+        <<encontrarArmadura "Manto Mágico" "Um manto longo negro e com detalhes em cinza, roxo e verde para se misturar à vegetação que cobre seu corpo todo." 2 1>>
+        
+        <<encontrarItem "Poção de vida" "Líquido vermelho mágico guardado em um pequeno frasco de vidro tampado por uma rolha. Um uso recupera 20 pontos de vida." 3>>
+
+        Vocês então saem da cabana e você finalmente pode ver melhor o lugar em que você está. É uma floresta de árvores de madeira escura em um tom de cinza, e entre as cascas é possível ver um brilho azulado. As folhas variam em tons de azul, roxo e rosa, e, vendo o tom alaranjado do céu, parece que o sol está para se pôr. 
+        Vocês caminham por uma trilha que se revela em meio à grama e aos arbustos, que têm tons vibrantes de verde e muitas flores coloridas, e some conforme vocês já atravessaram ela. Roy e Liz parecem cautelosos com cada passo que dão, sempre olhando para os lados e para trás. Você pode ver pequenos insetos estranhos, alguns brilhantes, outros do tamanho da sua mão, e parece que há uma névoa baixa e fina em toda a floresta, assim como na cabana. Você pode perceber um tom arroxeado nessa névoa, olhando melhor. Pássaros também são vistos, mas você estranha o clima pacífico que a floresta traz.
+        Você segue a dupla por mais um tempo, até que o sol finalmente se põe, mas o caminho onde vocês estão segue iluminado. Ninguém falou uma palavra desde que vocês saíram da cabana, e, a julgar pela tensão deles, você imagina que não seja a hora de comentar nada. Novamente, a aparência pacífica da floresta te causa um estranhamento, algo tão normal e bonito assim não deveria estar sendo real em um mundo onde tem um ditador bruxo maluco transformando seres em monstros à vontade.
+        [[Continuar|Stealth1]]
+    </div>
+</div>
