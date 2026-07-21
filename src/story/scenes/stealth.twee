@@ -7,4 +7,55 @@
         Você pensa em perguntar a eles o que é isso, e assim que inspira para falar, os dois se voltam em sua direção, gesticulando para ficar em silêncio. 
         Os passos se aproximam ainda mais. Você pode sentir a terra tremer.
     </div>
+    <div class="linha">
+        Mais galhos chacoalhando. Você olha ao redor na tentativa de encontrar o que estaria fazendo tanto barulho, mas só vê a vegetação de sempre.
+        Mas agora algo está diferente. Os animais parecem agitados, todos correndo numa mesma direção. Você vê várias espécies que nunca imaginaria serem possíveis, todas aparentando fugir de algo.
+        Os passos agora estão muito perto. Você busca segurança em Roy, mas é possível ver medo nele mesmo estando coberto pelo manto.
+    </div>
+    <div class="linha">
+        Você olha pra trás e vê o que estava fazendo tanto barulho. Você se depara com uma criatura de uns 3 metros, com 6 membros que se parecem com patas totalmente retorcidos, você até se questiona como essa coisa conseguia andar tão rápido.
+        O corpo dela parece estar cheio de cicatrizes, e é cheio de veias que brilham em tons de amarelo e laranja, que se destacam em meio a tanto roxo e azul da vegetação da floresta. Suas garras se estendem pelo o que aparenta ser o tamanho do seu antebraço.
+        A mandíbula dela aparenta ser capaz de destroçar metade de um corpo humano com facilidade, e ela aparenta estar farejando algo. Você não encontra olhos na criatura, mas ela parece escutar bem. Assim que escuta algo que parecia com uma lebre com asas pular em um arbusto ao lado, a criatura reage quase que instantâneamente e engole o animal em uma só mordida, e para bem ao lado de Roy.
+        Todos vocês estão imóveis. A besta começa a farejar novamente, até que você sente um empurrão.
+        - FUJAM DAQUI AGORA! LIZ, VOCÊ SABE PARA ONDE IR! SIGA O CAMINHO! ESCONDIDOS!! - grita Roy, e você vê a fera avançando nele ferozmente.
+        Só o que dá tempo de ver é ela rasgando o tórax de Roy em um golpe apenas, e seu corpo já sem vida cai no chão. A criatura anda desengonçada, mas parece ainda estar farejando por algo.
+        Você vê a pequena silhueta da Liz numa árvore perto, e segue até ela. Ela parece estar chorando, mas te entrega um papel.
+    </div>
+    <div class="linha">
+        "A gente tem que despistar essa coisa, mas sem sair do caminho. Não faz barulho nenhum."
+    </div>
+    <div class="linha">
+        Você acena com a cabeça, e vocês começam a andar. <<run $detectionLevel = 0>>
+        Enquanto andam pelo caminho, você dá olhadas para trás e vê que a besta procura vocês num ritmo maior que a sua caminhada. Vocês vão ter que se esconder.
+        Ela vem se aproximando mais e mais, e você vê um arbusto um pouco fora do caminho que parece o suficiente pra esconder vocês de maneira provisória, ou você pode tentar continuar pelo caminho.
+        <div class="linha-escolhas">
+            <span>[[>Se esconder no arbusto|Arbusto]]</span>
+            <span>[[>Tentar apressar o passo no caminho|Caminho1]]</span>
+        </div>
+    </div>
+</div>
+
+:: Arbusto
+<<statusFixo>>
+<div class="cena furtividade">
+    <div class="linha">
+        voce ta no mato
+        aqui vai ser mais facil de se esconder mas vai ter q dar um teste pra sair e continuar
+        a dificuldade vai aumentar em 5 na dt pra cada ponto de detecção que voce tiver
+        se chegou em 3, foi detectado
+        <<print $detectionLevel>>
+    </div>
+</div>
+
+:: Caminho1
+<<statusFixo>>
+<div class="cena furtividade">
+    <div class="linha">
+        voce ta no caminho
+        aqui vai ser mais dificil de se esconder mas vai te fazer chegar mais rapido
+        a dificuldade vai aumentar em 5 na dt pra cada ponto de detecção que voce tiver
+        se chegou em 3, foi detectado
+        <<run $detectionLevel += 1>>
+        <<print $detectionLevel>>
+    </div>
 </div>
