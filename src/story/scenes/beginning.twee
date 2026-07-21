@@ -14,9 +14,15 @@
 <div class="cena normal"> 
     <div class="linha"> 
         Você cede ao cansaço e decide fechar os olhos mais um pouco. 
+    <div class="linha">
         .
+    </div>
+    <div class="linha">
         .
+    </div>
+    <div class="linha">
         .
+    </div>
         10 minutos se passam, o alarme toca de novo. Você enrola um pouco na cama, mas sente um peso em seu peito.
     </div>
     <div class="linha"> 
@@ -72,11 +78,17 @@
         O céu está azul com poucas nuvens, e o calor do sol esquenta sua pele, como é de costume na cidade da Serra, no Espírito Santo. "Está um dia lindo para aproveitar a praia ou a piscina", você pensa.
         Você chega no ponto, e, apesar de cheio, você sabe que não são todos que conhecem a rota do 852, e por isso ele quase sempre está vazio. É o que você sempre diz, em tom de brincadeira com fundo de verdade: "Um ônibus vazio, alem de paz de espírito, faz a gente chegar mais rápido onde a gente precisa".
         Você então espera a chegada do seu transporte.
+    </div>
+    <div class="linha">
         .
+    </div>
+    <div class="linha">
         .
+    </div>
+    <div class="linha">
         .
-        .
-        .
+    </div>
+    <div class="linha">
         O ônibus chega. Você dá bom dia ao motorista, passa seu cartão GBVus e atravessa a catraca. Você passa por uma senhora jogando no Jogo da Oncinha e alguns jovens estudantes discutindo sobre a entrega de trabalhos universitários. Você escuta de relance eles mencionando coisas como "A nota de álgebra linear", "prova de redes" e outros termos técnicos que você não chega nem perto de entender.
         Como sempre, você se dirige aos assentos do fundo perto da porta, liga seus fones de ouvido e vai escutando seu álbum favorito do Radioface, "OK Smartphone".
     </div>
@@ -102,9 +114,15 @@
         O céu está azul com poucas nuvens, e o calor do sol esquenta sua pele, como é de costume na cidade da Serra, no Espírito Santo. "Está um dia lindo para aproveitar a praia ou a piscina", você pensa.
         Você chega no ponto, apenas para ver o ônibus, que passa a cada hora, fechando as portas e seguindo viagem.
         Você então se vê sem opção para não chegar atrasado a não ser pegar o próximo que vier.
+    <div class="linha">
         .
+    </div>
+    <div class="linha">
         .
+    </div>
+    <div class="linha">
         .
+    </div>
         Passam 5 minutos e chega um ônibus duplo da linha 551, completamente cheio. As pessoas no ponto se degladiam para tentar entrar mais rápido na esperança de garantir um assento, mas você não tem energia pra participar dessa disputa e aceita que vai ter que ir de pé.
         Você se espreme entre uns adolescentes que estão indo à praia conversando alto, outros trabalhadores com caras de cansados, umas outras pessoas que parecem ter esquecido de passar desodorante hoje, idosos assistindo vídeos no celular com o volume máximo, enquanto uma criança chora ao fundo com sua mãe. 
         Na esperança de silenciar a quantidade de ruído ao seu redor, você pega seu celular e tenta ligar seu fone para escutar o álbum "The White Parade" da banda "My Physical Romance", apenas para perceber que se esqueceu de carregar seu fone na noite passada.
@@ -123,9 +141,9 @@
     </div>
     <div class="linha"> 
         Você chega em casa e é recebido pelo seu gato, se esfregando em suas pernas como se te dissesse "Boas vindas".
-        Sua energia dura o suficiente para cuidar dele, tomar banho e fazer sua última refeição do dia. Você sente seu corpo pesado, e apaga assim que deita na cama.
+        Sua energia dura o suficiente para cuidar dele, tomar banho e fazer sua última refeição do dia. Você sente seu corpo pesado.
     </div>
-    [[Começar|Sehanctus]]
+    [[Dormir|Sehanctus]]
 </div>
 
 :: Sehanctus

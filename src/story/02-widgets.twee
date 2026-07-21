@@ -137,7 +137,7 @@
         })>>
     <</if>>
     
-    Você encontra x_quantidade _nome: _descricao. 
+    Você encontra x_quantidade _nome: _descricao
 <</widget>>
 
 <<widget "usarItem">>
