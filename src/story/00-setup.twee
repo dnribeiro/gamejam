@@ -97,106 +97,129 @@ setup.rotuloConfianca = function (valor) {
 // ==========================================================
 // MODO VISUAL NOVEL - digita o conteudo de .cena bloco por
 // bloco (cada .linha / .linha-escolhas / link solto), letra
-// por letra, com um botao "Proximo" fixo embaixo da tela.
+// por letra.
+//
+// Blocos SEM link/botao avancam sozinhos, com uma pequena
+// pausa entre eles. Blocos COM link/botao (uma escolha real,
+// ou um "continuar") simplesmente param depois de digitados -
+// o jogador clica no link normal do SugarCube pra prosseguir,
+// nao tem botao proprio de "Proximo" nenhum.
+//
+// Tambem digita automaticamente qualquer coisa que aparecer
+// depois via <<replace>> (ex: os widgets encontrarArma,
+// encontrarItem, etc), usando um MutationObserver.
 //
 // Nao mexe em nenhum outro lugar da passagem (o statusFixo,
 // por exemplo, fica de fora, ja que nao esta dentro de .cena).
 // Nao precisa ser chamado manualmente em nenhuma passagem -
-// se conecta sozinho sempre que existir um .cena na tela.
+// se conecta sozinho via a passagem especial PassageDone.
 // ==========================================================
 setup.vn = {
-    velocidade: 18 // ms por caractere
+    velocidade: 18,       // ms por caractere
+    pausaEntreBlocos: 500 // ms de espera depois de um bloco sem escolha, antes do proximo
 };
 
-setup.vnAplicar = function (cenaEl) {
-    var blocos = Array.from(cenaEl.children); // .linha, .linha-escolhas, links soltos, etc
-    if (blocos.length === 0) return;
-
-    cenaEl.innerHTML = ""; // remove da tela - os nos de "blocos" continuam existindo em memoria,
-                            // com seus links e widgets intactos, so desanexados por enquanto
-
-    var botao = document.createElement("button");
-    botao.className = "vn-proximo";
-    botao.id = "vn-proximo-btn";
-    botao.innerHTML = "Próximo &raquo;";
-    document.body.appendChild(botao);
-
-    var idx = 0;
-    var digitando = false;
-    var textNodesAtual = [];
-    var ponteiro = 0;
-    var intervalo = null;
-
-    // acha, recursivamente, todo texto "de verdade" dentro de um bloco -
-    // elementos (links, spans de escolha, o que <<encontrarArma>> gerar, etc)
-    // ficam como estao, nunca sao recriados, entao continuam funcionando normalmente
-    function coletarTextNodes(el, lista) {
-        Array.from(el.childNodes).forEach(function (n) {
+// digita um elemento ja inserido no DOM, letra por letra, recursivamente
+// (nao mexe em elementos - links/widgets continuam intactos, so o texto
+// ao redor deles e escondido e revelado aos poucos)
+setup.vnTypeElement = function (el, aoTerminar) {
+    var textNodes = [];
+    (function coletar(no) {
+        Array.from(no.childNodes).forEach(function (n) {
             if (n.nodeType === 3 && n.textContent.trim() !== "") {
-                lista.push(n);
+                textNodes.push(n);
             } else if (n.nodeType === 1) {
-                coletarTextNodes(n, lista);
+                coletar(n);
             }
         });
+    })(el);
+
+    if (textNodes.length === 0) {
+        if (aoTerminar) aoTerminar();
+        return;
     }
 
-    function iniciarProximoBloco() {
-        if (idx >= blocos.length) {
-            botao.remove();
+    textNodes.forEach(function (n) {
+        n._vnTextoCompleto = n.textContent;
+        n.textContent = "";
+    });
+
+    var ponteiro = 0;
+    var intervalo = setInterval(function () {
+        if (ponteiro >= textNodes.length) {
+            clearInterval(intervalo);
+            if (aoTerminar) aoTerminar();
             return;
         }
+        var n = textNodes[ponteiro];
+        var alvo = n._vnTextoCompleto;
+        if (n.textContent.length < alvo.length) {
+            n.textContent = alvo.substring(0, n.textContent.length + 1);
+        } else {
+            ponteiro++;
+        }
+    }, setup.vn.velocidade);
+};
+
+setup.vnAplicar = function () {
+    var cenaEl = document.querySelector("#passages .cena");
+    if (!cenaEl) return;
+
+    // desconecta o observer de uma passagem anterior, se sobrou algum
+    if (setup.vn._observer) setup.vn._observer.disconnect();
+
+    var blocos = Array.from(cenaEl.children);
+    if (blocos.length === 0) return;
+
+    cenaEl.innerHTML = ""; // remove da tela - os nos continuam existindo em memoria,
+                            // com seus links e widgets intactos, so desanexados por enquanto
+
+    var idx = 0;
+
+    function temLinkOuBotao(el) {
+        return el.querySelector("a, button") !== null;
+    }
+
+    function proximoBloco() {
+        if (idx >= blocos.length) return; // acabaram os blocos originais dessa passagem
+
         var bloco = blocos[idx++];
         cenaEl.appendChild(bloco);
         cenaEl.scrollTop = cenaEl.scrollHeight;
 
-        textNodesAtual = [];
-        coletarTextNodes(bloco, textNodesAtual);
-        textNodesAtual.forEach(function (n) {
-            n._vnTextoCompleto = n.textContent;
-            n.textContent = "";
+        var interativo = temLinkOuBotao(bloco);
+        setup.vnTypeElement(bloco, function () {
+            if (!interativo) {
+                // narracao pura - segue sozinho depois de uma pequena pausa
+                setTimeout(proximoBloco, setup.vn.pausaEntreBlocos);
+            }
+            // se for interativo (escolha ou link), so para e espera o clique -
+            // seja ele uma troca de passagem (PassageDone cuida disso sozinho)
+            // ou um <<replace>> na mesma passagem (o observer abaixo retoma
+            // a sequencia assim que o texto do replace terminar de digitar)
         });
-
-        ponteiro = 0;
-        digitando = true;
-        intervalo = setInterval(digitarPasso, setup.vn.velocidade);
     }
 
-    function digitarPasso() {
-        if (ponteiro >= textNodesAtual.length) {
-            clearInterval(intervalo);
-            digitando = false;
-            return;
-        }
-        var n = textNodesAtual[ponteiro];
-        var alvo = n._vnTextoCompleto;
-        if (n.textContent.length < alvo.length) {
-            n.textContent = alvo.substring(0, n.textContent.length + 1);
-            cenaEl.scrollTop = cenaEl.scrollHeight;
-        } else {
-            ponteiro++;
-        }
-    }
-
-    botao.addEventListener("click", function () {
-        if (digitando) {
-            // pula pro final do bloco atual
-            clearInterval(intervalo);
-            textNodesAtual.forEach(function (n) { n.textContent = n._vnTextoCompleto; });
-            digitando = false;
-        } else {
-            iniciarProximoBloco();
-        }
+    // observa qualquer coisa nova que aparecer dentro da cena depois
+    // (tipicamente um <<replace>> disparado por uma escolha ou widget).
+    // "m.target !== cenaEl" ja filtra os blocos que a gente mesmo
+    // acabou de inserir la em cima (esses sao filhos diretos da cena;
+    // um <<replace>> sempre acontece num elemento aninhado mais fundo)
+    setup.vn._observer = new MutationObserver(function (mutationsList) {
+        var alvos = new Set();
+        mutationsList.forEach(function (m) {
+            if (m.addedNodes.length > 0 && m.target !== cenaEl) {
+                alvos.add(m.target);
+            }
+        });
+        alvos.forEach(function (alvo) {
+            setup.vnTypeElement(alvo, proximoBloco);
+        });
     });
+    setup.vn._observer.observe(cenaEl, { childList: true, subtree: true });
 
-    iniciarProximoBloco();
+    proximoBloco();
 };
-
-// conecta o modo VN automaticamente sempre que uma passagem termina de renderizar
-$(document).on(":passagedisplay", function () {
-    $("#vn-proximo-btn").remove(); // limpa o botao da passagem anterior, se sobrou algum
-    var cenaEl = document.querySelector("#passages .cena");
-    if (cenaEl) setup.vnAplicar(cenaEl);
-});
 
 :: StoryInit
 <<set $player = {
@@ -219,6 +242,10 @@ $(document).on(":passagedisplay", function () {
     inventario: [],
     keyItems: []
 }>>
+
+
+:: PassageDone
+<<run setup.vnAplicar()>>
 
 
 :: StoryStylesheet [stylesheet]
@@ -281,20 +308,3 @@ body { background: #050505; }
     gap: 40px;
     margin: 16px 0;
 }
-
-/* botao fixo de "Proximo" do modo visual novel */
-.vn-proximo {
-  position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #050505;
-  color: var(--magenta);
-  border: 2px dotted var(--vermelho);
-  font-family: inherit;
-  font-size: 14px;
-  padding: 12px 30px;
-  cursor: pointer;
-  z-index: 100;
-}
-.vn-proximo:hover { background: #1a0510; }
