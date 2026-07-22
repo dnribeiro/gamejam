@@ -39,11 +39,51 @@
 <<statusFixo>>
 <div class="cena furtividade">
     <div class="linha">
-        voce ta no mato
-        aqui vai ser mais facil de se esconder mas vai ter q dar um teste pra sair e continuar
-        a dificuldade vai aumentar em 5 na dt pra cada ponto de detecção que voce tiver
-        se chegou em 3, foi detectado
-        <<print $detectionLevel>>
+        Apesar de Liz querer continuar seguindo o caminho, você julga mais seguro se enfiar no meio da vegetação próxima, na esperança de mascarar seu cheiro com o cheiro das frutas que estão ali e despistar o monstro por um tempo.
+        <div class="linha" id="001">
+            <<link ">Se esconder (Teste de Destreza)">>
+                <<set _rolls = setup.rollPool($player.atributos.dex)>>
+                <<set _passou = setup.calcPass(_rolls, 10, $player.equipamento.armadura.esquiva || 0, $player.confianca)>>
+                <<replace "#001">>
+                    Seu maior dado: _rolls.valor
+                    Valor total: _rolls.valor + Modificador $player.equipamento.armadura.esquiva + Confiança $player.confianca
+                    <<if _passou>>
+                        Você e Liz se colocam rapidamente entre os arbustos perto do caminho. Você percebe o manto que antes era negro agora assumindo um pouco das cores do seu arredor, e você acaba com vestes texturizadas nas cores da floresta.
+                        Os passos pesados se aproximam, o ruído de um animal farejando sua presa faz seu coração bater mais forte. Você nem sabe mais por quanto tempo você tá segurando sua respiração, e tampouco sabe quanto mais você aguenta.
+                        A besta passa por vocês, grunhindo e farejando, mas não parece ter percebido sua presença. Seu manto camuflado te enche com maior confiança de que vocês vão sim sair vivos.<<run $player.confianca += 1>> <<atualizarStatus>>
+                        Assim que a criatura se afasta, você vê Liz sinalizando que é hora de sair. Seu fôlego está quase acabando, e você sente uma vontade incontrolável de inspirar.
+                        <div class="linha" id="002">
+                            <<link ">Controlar Respiração (Teste de Vigor)">>
+                                <<if _rolls.sucessoGarantido>>
+                                    <<replace "#002">>
+                                        Você consegue controlar sua respiração e inspirar sem fazer barulho. Então, vocês dois voltam para o caminho sem chamar a atenção do monstro, e, além disso, ele agora está à frente de vocês, o que permite que seja mais fácil de prever suas ações.
+                                        Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>> <<atualizarStatus>>
+                                    <</replace>>
+                                <<else>>
+                                    <<run _rolls = setup.rollPool($player.atributos.vig)>>
+                                    <<run _passou = setup.calcPass(_rolls, 10, 0, $player.confianca)>>
+                                    <<replace "#002">>
+                                        Seu maior dado: _rolls.valor
+                                        Valor total: _rolls.valor + Modificador 0 + Confiança $player.confianca
+                                        <<if _passou>>
+                                            Você consegue controlar sua respiração e inspirar sem fazer barulho. Então, vocês dois voltam para o caminho sem chamar a atenção do monstro, e, além disso, ele agora está à frente de vocês, o que permite que seja mais fácil de prever suas ações.
+                                            Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>> <<atualizarStatus>>
+                                        <<else>>
+                                            Você sente seu fôlego se esvaindo, e cede ao instinto de buscar mais ar, respirando fundo.
+                                            O monstro para de andar e assume uma postura um pouco mais atenta. Ele vira a cabeça para os lados, alterando o ângulo de uma maneira bizarra, como se buscasse por mais informações de onde esse ruído veio. O brilho amarelo das suas veias salteadas se torna ainda mais intenso, e ela parece estar mais alerta. <<run $detectionLevel += 1>> 
+                                            Essa situação te deixa tenso, mas vocês ainda conseguem voltar para o caminho. <<run $player.confianca -= 1>> <<atualizarStatus>>
+                                            Você enxerga a criatura a alguns metros de distância, rosnando e buscando por suas presas. Ela ataca alguns animais que passam pelo caminho, mas ainda não parece satisfeita.
+                                        <</if>>
+                                    <</replace>>
+                                <</if>>
+                            <</link>>
+                        </div>
+                    <<else>>
+                        voce nao passou
+                    <</if>>
+                <</replace>>
+            <</link>>
+        </div>
     </div>
 </div>
 
