@@ -46,7 +46,7 @@
                 <<set _passou = setup.calcPass(_rolls, 10, $player.equipamento.armadura.esquiva || 0, $player.confianca)>>
                 <<replace "#001">>
                     Seu maior dado: _rolls.valor
-                    Valor total: _rolls.valor + Modificador $player.equipamento.armadura.esquiva + Confiança $player.confianca
+                    Valor total: _rolls.valor + Modificador $player.equipamento.armadura.esquiva + Confiança $player.confianca = <<print (_rolls.valor + $player.equipamento.armadura.esquiva + $player.confianca)>>
                     <<if _passou>>
                         Você e Liz se colocam rapidamente entre os arbustos perto do caminho. Você percebe o manto que antes era negro agora assumindo um pouco das cores do seu arredor, e você acaba com vestes texturizadas nas cores da floresta.
                         Os passos pesados se aproximam, o ruído de um animal farejando sua presa faz seu coração bater mais forte. Você nem sabe mais por quanto tempo você tá segurando sua respiração, e tampouco sabe quanto mais você aguenta.
@@ -64,7 +64,7 @@
                                     <<run _passou = setup.calcPass(_rolls, 10, 0, $player.confianca)>>
                                     <<replace "#002">>
                                         Seu maior dado: _rolls.valor
-                                        Valor total: _rolls.valor + Modificador 0 + Confiança $player.confianca
+                                        Valor total: _rolls.valor + Modificador 0 + Confiança $player.confianca = <<print (_rolls.valor + $player.confianca)>>
                                         <<if _passou>>
                                             Você consegue controlar sua respiração e inspirar sem fazer barulho. Então, vocês dois voltam para o caminho sem chamar a atenção do monstro, e, além disso, ele agora está à frente de vocês, o que permite que seja mais fácil de prever suas ações.
                                             Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>> <<atualizarStatus>>
@@ -79,13 +79,47 @@
                             <</link>>
                         </div>
                     <<else>>
-                        voce nao passou
+                        Você vai em direção ao arbusto, sentindo suas mãos tremendo. Você sente tanto medo que, apesar de ver Liz tomando muito cuidado pra se esconder como você quis, você tropeça nas raízes das árvores que se espalham pelo chão.
+                        Você sente o coração palpitar ao ver a criatura se virando em sua direção. <<if $player.confianca > 0>> <<run $player.confianca -= 1>><</if>> <<run $detectionLevel += 1>>
+                        Você não sabe se é impressão dada pela adrenalina, mas as veias dela agora parecem brilhar em um tom de amarelo mais intenso.
+                        A criatura vem se aproximando rapidamente, e só dá tempo de você se enfiar no meio das folhas e rezar para que tenha sido o suficiente. Você repara que seu manto muda a coloração para ajudar a se esconder. 
+                        Ver essa coisa enorme de perto te deixaria nervoso mesmo se ela nao estivesse fazendo nada, mas ela está ativamente procurando por você.
+                        Ela chega cada vez mais perto do seu esconderijo, e calafrios começam a percorrer seu corpo. Suor frio escorre pela sua testa, e a esse ponto não há mais muito o que fazer. Você escuta os passos pesados, os grunhidos, o barulho de farejo. 
+                        Então, um animal sai correndo perto de vocês na tentativa de escapar, apenas para ser alcançado rapidamente. Porém, essa é a oportunidade que você esperava para sair do esconderijo e fugir.
+                        <div class="linha" id="003"> 
+                            <<link ">Sair dos arbustos (Teste de Destreza)">>
+                                <<set _rolls = setup.rollPool($player.atributos.dex)>>
+                                <<set _passou = setup.calcPass(_rolls, 11, $player.equipamento.armadura.esquiva || 0, $player.confianca)>>
+                                <<replace "#003">>
+                                        Seu maior dado: _rolls.valor
+                                        Valor total: _rolls.valor + Modificador $player.equipamento.armadura.esquiva + Confiança $player.confianca = <<print (_rolls.valor + $player.equipamento.armadura.esquiva + $player.confianca)>>
+                                    <<if _passou>>
+                                        Conforme a criatura vai se afastando, você pode ter uma visão melhor dela. Você toma mais cuidado com seus passos na hora de sair, e consegue voltar ao caminho com a Liz. <<run $player.confianca += 1>>
+                                        Conseguir sair ileso dessa situação, apesar de assustador, te inspira a acreditar que você vai conseguir chegar onde Liz quer te levar. 
+                                    <<else>>
+                                        Você tenta sair, mas seu pé se prende nos ramos dos arbustos, e quebra um, e você cai no chão. Você olha pra cima, e vê a Liz já de volta no caminho, te esperando. A linguagem corporal dela transparece que ela está extremamente assustada.
+                                        Você ouve um rosnado, e a criatura vem quase voando pra cima de você, mas você caiu um pouco mais à frente de onde os arbustos estavam. Ela destrói a árvore que estava perto, levando os arbustos junto, mas te erra. <<if $player.confianca > 0>> <<run $player.confianca -= 1>><</if>> <<run $detectionLevel += 1>>
+                                        As veias dela agora brilham em um tom de laranja forte, e ela parece estar ficando mais irritada por não te encontrar. Ela desiste de procurar no seu antigo esconderijo, e volta pra onde estava antes, bem à frente de vocês no caminho.
+                                    <</if>>
+                                <</replace>>
+                            <</link>>
+                        </div>
                     <</if>>
                 <</replace>>
             <</link>>
         </div>
     </div>
+    <div class="linha">
+        Vocês não têm tempo a perder. Por onde vocês seguem?
+        <div class="linha-escolhas">
+            <span>[[>Seguir o caminho|Caminho2]]</span>
+            <span>[[>Tentar um atalho pela floresta|Floresta]]</span>
+        </div>
+    </div>
 </div>
+
+:: Floresta
+voce e maluco
 
 :: Caminho1
 <<statusFixo>>
@@ -99,3 +133,10 @@
         <<print $detectionLevel>>
     </div>
 </div>
+
+:: Caminho2
+vai dar certo
+
+:: Perseguicao
+
+:: Final
