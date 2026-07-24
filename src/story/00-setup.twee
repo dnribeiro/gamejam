@@ -213,7 +213,15 @@ setup.vnAplicar = function () {
             }
         });
         alvos.forEach(function (alvo) {
-            setup.vnTypeElement(alvo, proximoBloco);
+            setup.vnTypeElement(alvo, function () {
+                // so retoma a sequencia principal se o que acabou de aparecer
+                // NAO tiver mais nenhum link/botao - ou seja, se ainda restar
+                // um teste aninhado esperando clique (tipo um id="002" dentro
+                // do id="001"), fica esperando esse tambem, sem pular a frente
+                if (!temLinkOuBotao(alvo)) {
+                    proximoBloco();
+                }
+            });
         });
     });
     setup.vn._observer.observe(cenaEl, { childList: true, subtree: true });
