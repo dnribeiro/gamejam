@@ -234,6 +234,7 @@ setup.vnAplicar = function () {
     nivel: 1,
     hp: 60, 
     maxHp: 60, /* 50 + 10 por nivel de vigor */
+    lives: 3,
     esquiva: 11, /* 10 + 1 por nivel de destreza */
     confianca: 0,
     atributos: {
