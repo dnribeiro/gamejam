@@ -19,12 +19,11 @@
                 <div class="barra-preenchimento" @style="'width: ' + _pctVida + '%'"></div>
             </div>
         </div>
-        <div @class="'confianca-rotulo ' + _faixa.classe"><<print _faixa.texto>></div>
+        <div @class="'confianca-rotulo ' + _faixa.classe"><<print _faixa.texto>> (<<print $player.confianca>>)</div>
     </div>
 
     <div class="top-ui">
         <button><<link "Inventário" "Inventario">><</link>></button>
-        <button><<link "Config" "Configuracoes">><</link>></button>
     </div>
 <</widget>>
 
@@ -134,6 +133,30 @@
             nome: _nome,
             descricao: _descricao,
             quantidade: _quantidade
+        })>>
+    <</if>>
+    
+    Você encontra x_quantidade _nome: _descricao
+<</widget>>
+
+<<widget "encontrarItemChave">>
+    <<set _nome = $args[0]>>
+    <<set _descricao = $args[1]>>
+    <<set _itemExiste = false>>
+
+    /* Percorre o inventário procurando se já existe um item com o mesmo nome */
+    <<for _i = 0; _i < $player.keyItems.length; _i++>>
+        <<if $player.keyItems[_i].nome === _nome>>
+            <<set _itemExiste = true>>
+            <<break>> /* Encontrou, atualizou e parou o loop */
+        <</if>>
+    <</for>>
+
+    /* Se o loop acabou e o item não existia no inventário, adiciona um novo */
+    <<if not _itemExiste>>
+        <<run $player.keyItems.push({
+            nome: _nome,
+            descricao: _descricao,
         })>>
     <</if>>
     
