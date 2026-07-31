@@ -76,6 +76,25 @@ setup.calcDano = function(rollAtaque, arma, outrosModificadores) {
     };
 };
 
+setup.calcDanoInimigo = function(rollAtaque, numDados, tipoDado, modificadores) {
+    // Rola os dados de dano (retorna a lista de rolagens)
+    let rolagensDados = setup.rollDano(numDados, tipoDado);
+    
+    // Soma todos os dados contidos na lista (Array.reduce)
+    let somaDados = rolagensDados.reduce((total, valorAtual) => total + valorAtual, 0);
+    
+    let ehCritico = rollAtaque === 20;
+    
+    // Base do dano: dados + força + modificador da arma + outros modificadores
+    let danoBase = somaDados + modificadores;
+    
+    // Aplica o multiplicador se for crítico (se não tiver a propriedade, o padrão é x2)
+    let multiplicador = arma.multCritico || 2;
+    let danoFinal = ehCritico ? danoBase * multiplicador : danoBase;
+    
+    return danoFinal
+};
+
 // Converte o valor numerico de confianca num rotulo textual, por faixa.
 // Ajuste os thresholds e textos livremente - é só uma lista ordenada.
 setup.faixasConfianca = [
