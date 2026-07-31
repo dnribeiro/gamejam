@@ -1,5 +1,6 @@
 :: Stealth1
 <<statusFixo>>
+<<set $encontrado = false>>
 <div class="cena furtividade"> 
     <div class="linha"> 
         De repente, um ruído de passos pesados e folhas se movendo é escutado na direita do caminho. Todos ficam imóveis. O ar parece até ter ficado mais denso.
@@ -57,7 +58,8 @@
                                 <<if _rolls.sucessoGarantido>>
                                     <<replace "#002">>
                                         Você consegue controlar sua respiração e inspirar sem fazer barulho. Então, vocês dois voltam para o caminho sem chamar a atenção do monstro, e, além disso, ele agora está à frente de vocês, o que permite que seja mais fácil de prever suas ações.
-                                        Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>> <<atualizarStatus>>
+                                        Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>>
+                                        <<subirNivel>> <<atualizarStatus>>
                                     <</replace>>
                                 <<else>>
                                     <<run _rolls = setup.rollPool($player.atributos.vig)>>
@@ -67,7 +69,8 @@
                                         Valor total: _rolls.valor + Modificador 0 + Confiança $player.confianca = <<print (_rolls.valor + $player.confianca)>>
                                         <<if _passou>>
                                             Você consegue controlar sua respiração e inspirar sem fazer barulho. Então, vocês dois voltam para o caminho sem chamar a atenção do monstro, e, além disso, ele agora está à frente de vocês, o que permite que seja mais fácil de prever suas ações.
-                                            Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>> <<atualizarStatus>>
+                                            Você sente que isso vai dar certo, e em breve vocês conseguirão chegar onde quer que seja onde vocês precisam ir. <<run $player.confianca += 1>>
+                                            <<subirNivel>> <<atualizarStatus>>
                                         <<else>>
                                             Você sente seu fôlego se esvaindo, e cede ao instinto de buscar mais ar, respirando fundo.
                                             O monstro para de andar e assume uma postura um pouco mais atenta. Ele vira a cabeça para os lados, alterando o ângulo de uma maneira bizarra, como se buscasse por mais informações de onde esse ruído veio. O brilho amarelo das suas veias salteadas se torna ainda mais intenso, e ela parece estar mais alerta. <<run $detectionLevel += 1>> 
@@ -125,18 +128,212 @@ voce e maluco
 <<statusFixo>>
 <div class="cena furtividade">
     <div class="linha">
-        voce ta no caminho
-        aqui vai ser mais dificil de se esconder mas vai te fazer chegar mais rapido
-        a dificuldade vai aumentar em 5 na dt pra cada ponto de detecção que voce tiver
-        se chegou em 3, foi detectado
-        <<run $detectionLevel += 1>>
-        <<print $detectionLevel>>
+        Você aceita o conselho de Liz e confia que é possível continuar fugindo da criatura pelo caminho. Ela não parece estar ciente dessa trilha mágica que vocês estão seguindo, mas você imagina que vestígios mágicos fazem com que ela tenha sua atenção voltada a esses traços de magia.
+        Vocês andam o mais rápido que vocês conseguem, na esperança de seja lá qual for a magia que gera esse caminho para vocês os esconda dessa coisa que os persegue.
+        É possível ver a silhueta dela se aproximando, com passos pesados e uma força capaz de derrubar as árvores em seu caminho. Ela grunhe e rosna como um cachorro, e fareja por presas próximas. Vez ou outra algum animal tenta escapar, mas a criatura é rápida demais, e sempre conclui sua caçada.
+        Ela vem chegando mais perto, e Liz te impede de se mover, o que te assusta. Você foi pego de surpresa e desequilibra um pouco.
+        <div class="linha" id="001">
+            <<link ">Manter o equilíbrio (Teste de destreza)">>
+                <<set _rolls = setup.rollPool($player.atributos.dex)>>
+                <<set _passou = setup.calcPass(_rolls, 12, 0, $player.confianca)>>
+                <<replace "#001">>
+                    Seu maior dado: _rolls.valor
+                    Valor total: _rolls.valor + Confiança $player.confianca = <<print (_rolls.valor + $player.confianca)>>
+                    <<if _passou>>
+                        Você consegue recuperar seu equilíbrio apesar do susto. A criatura não pareceu ser alertada pelo acontecimento, e ela passa bem ao lado de vocês, como se estivesse patrulhando mais à frente no caminho.
+                        Você percebe também seu manto alterando suas cores e exalando cheiros para assumir uma camuflagem com o ambiente. Você sente que vai conseguir chegar onde vocês têm que chegar. <<run $player.confianca += 2>>
+                        <<subirNivel>> <<atualizarStatus>>
+                    <<else>>
+                        Você cai com tudo no chão, e a criatura bem à frente de vocês. Você percebe seu manto mudando de cor para um tom mais marrom, tentando se camuflar com a terra, e exalando fragrâncias que te misturem ao ambiente.
+                        A criatura se volta para onde vocês estão, e passa um tempo circulando por ali. Ela faz um movimento parecido com um gato quando se arrepia, e as veias dela que estavam mudando de cor agora estão em um tom de laranja forte e constante.
+                        Os vestígios mágicos do caminho parecem estar confundindo ela, e ela logo sai à sua frente em busca de mais presas.
+                        Liz te ajuda a levantar, e, apesar de ser pequena, ela consegue te dar apoio. <<if $player.confianca > 0>><<run $player.confianca -= 1>><</if>> <<run $detectionLevel += 2>>
+                    <</if>>
+                <</replace>>
+            <</link>>
+        </div>
+        Você vê a criatura mais alerta caçando a uma curta distância de vocês. O que você faz?
+    </div>
+    <div class="linha-escolhas">
+        <span>[[>Continuar no caminho|Caminho2]]</span>
+        <span>[[>Tentar um atalho pela floresta|Floresta]]</span>
     </div>
 </div>
 
 :: Caminho2
-vai dar certo
+<<statusFixo>>
+<div class="cena furtividade">
+    <div class="linha">
+        Seguindo pelo caminho, você tem uma visão melhor da criatura, com suas veias brilhando, e agora cheia de sangue das suas caças. Ela vai destruindo árvores e arbustos que estão no caminho entre ela e suas presas, e você consegue perceber que ela está ficando mais cansada.
+        Vocês seguem em silêncio, e a tensão no ar é ainda maior. Você têm vontade de apressar o passo, cada nervo do seu corpo implorando para que você se retire dessa situação estressante.
+        <div class="linha" id="001">
+            <<link ">Caminhar mais rápido (Teste de destreza)">>
+                <<set _rolls = setup.rollPool($player.atributos.dex)>>
+                <<set _passou = setup.calcPass(_rolls, 12, $player.equipamento.armadura.esquiva || 0, $player.confianca)>>
+                <<replace "#001">>
+                    Seu maior dado: _rolls.valor
+                    Valor total: _rolls.valor + Modificador $player.equipamento.armadura.esquiva + Confiança $player.confianca = <<print (_rolls.valor + $player.equipamento.armadura.esquiva + $player.confianca)>>
+                    <<if _passou>>
+                        Vocês apressam o passo. A criatura vai para um lado oposto do de vocês, distraída pelos animais que ainda tentam escapar das suas garras e presas.
+                        Você repara que há vários gravetos e folhas secas no caminho, mas consegue desviar de todas. <<run $player.confianca += 2>> 
+                        <<subirNivel>> <<atualizarStatus>>
+                    <<else>>
+                        Vocês apressam o passo, mas você está tão preocupado com a presença perturbadora da criatura que não percebe que havia vários gravetos e folhas secas espalhadas no chão do caminho, e você pisa em muitas. <<if $player.confianca > 0>> <<run $player.confianca -= 1>><</if>> <<run $detectionLevel += 2>>
+                        <<if detectionLevel > 2>>
+                            A criatura estava atenta ao seu redor.
+                            Ela estava buscando por sinais vindos de uma fraca emanação mágica.
+                            O caminho onde vocês estão.
+                            Ela vira a cabeça na direção de vocês assim que você faz barulho.
+                            Suas veias estão pulsando em um vermelho vibrante.
+                            E ela começa a correr.
+                            Você e Liz só podem [[Correr|Perseguicao]] pelas suas vidas.
+                        <<else>>
+                            Seu coração congela ao perceber o que aconteceu. A fera assume uma postura parecida com a de um gato arrepiado e se vira na direção de vocês. As folhas no chão emitiram um tipo de pó azulado e lilás quando foram quebradas.
+                            Quando Liz percebe isso, ela te segura pela mão e corre um pouco, te afastando um pouco de onde você estava. E agora vocês estão imóveis, na esperança de despistar o monstro. A quantidade de árvores onde vocês estão não permite mais que você tenha uma visão direta dela, e tudo tá em um absoluto silêncio.
+                            .
+                            .
+                            .
+                            .
+                            .
+                            A criatura aparece, vindo de um salto extremamente veloz, e pousa com as garras exatamente onde vocês estavam antes. Ela parece confusa, ergue a cabeça, em busca de novos sons a perseguir. 
+                            O brilho de suas veias agora é um intenso laranja, e ela parece extremamente atenta ao seu redor.
+                            Você vê uma pedra no chão.
+                            <div class="linha-escolhas" id="002">
+                                <span><<link ">Distrair a criatura com a pedra">>
+                                    <<set _rolls = setup.rollPool($player.atributos.dex)>>
+                                    <<set _passou = setup.calcPass(_rolls, 6, 0, $player.confianca)>>
+                                    <<if _passou>>
+                                        <<replace "#002">>
+                                            Você lança a pedra com toda sua força, mirando na direão oposta a vocês.
+                                            A pedra por um momento some na imensidão roxa e azul das folhas das árvores, mas passam alguns segundos e você pode escutar o barulho dela caindo no chão.
+                                            A criatura se vira totalmente ao ruído, e corre em direção a ele. Direção totalmente oposta à de vocês.
+                                            <<subirNivel>> <<run $player.confianca += 1>> <<atualizarStatus>>
+                                        <</replace>>
+                                    <<else>>
+                                        <<replace "#002">>    
+                                            Você lança a pedra com toda sua força, mas você mirou completamente errado, e sem querer acerta o monstro.
+                                            Você vê suas veias assumindo um tom de vermelho vibrante, e sua respiração ficando mais ofegante.
+                                            Ela se prepara para perseguir o que quer que tenha jogado essa pedra nela.
+                                            E você e Liz só podem [[Correr|Perseguicao]] pelas suas vidas. <<if $player.confianca > 0>><<run $player.confianca -= 1>><</if>>
+                                        <</replace>>
+                                    <</if>>
+                                <</link>></span>
+                                <span><<link ">Esperar e torcer que ela se distraia">>
+                                    <<set _rolls = setup.rollPool($player.atributos.vig)>>
+                                    <<set _passou = setup.calcPass(_rolls, 8, 0, $player.confianca)>>
+                                    <<if _passou>>
+                                        <<replace "#002">>    
+                                            Você continua imóvel, e só te resta esperar que a criatura se distraia.
+                                            Ela circula um pouco a região, tentando encontrar o causador do ruído, mas acaba sem sucesso.
+                                            Você vê essa figura gigante dando meia volta e se afastando de vocês.
+                                            É a chance que vocês esperavam para sair daí.
+                                            <<subirNivel>> <<atualizarStatus>>
+                                        <</replace>>
+                                    <<else>>
+                                        <<replace "#002">>    
+                                            Você tenta se manter imóvel, mas já é tarde demais. Ela percebeu vocês aí.
+                                            Você vê suas veias assumindo um tom de vermelho vibrante, e sua respiração ficando mais ofegante.
+                                            Ela se prepara para perseguir vocês.
+                                            E você e Liz só podem [[Correr|Perseguicao]] pelas suas vidas. <<if $player.confianca > 0>><<run $player.confianca -= 1>><</if>>
+                                        <</replace>>
+                                    <</if>>
+                                <</link>></span>
+                            </div>
+                        <</if>>
+                    <</if>>
+                <</replace>>
+            <</link>>
+        </div>
+    </div>
+    <div class="linha">
+        Vocês veem a besta se afastando na distância, deixando um rastro de sangue pelo chão.
+        Você repara que o chão do caminho começa a mudar de um chão de terra batida para alguns tijolos de pedra.
+        [[>Seguir o caminho|Final]]
+    </div>
+</div>
 
 :: Perseguicao
+<<statusFixo>>
+<<run $encontrado = true>>
+<<set _sucessos = 0>>
+<div class="cena combate">
+    <div class="linha">
+        - CORRE ATRÁS DE MIM! - grita Liz, assim que percebe que vocês foram descobertos. Você não tem outra escolha senão acreditar no plano dela.
+        Ela começa a correr, e a criatura avança para cima de você.
+        <<set _rollsInimigo = setup.rollPool(3)>>
+        <<set _passouInimigo = setup.calcPass(_rollsInimigo, $player.esquiva+$player.equipamento.armadura.esquiva, 5, 0)>>
+        dado inimigo: <<print _rollsInimigo.valor>> defesa: <<print $player.esquiva+$player.equipamento.armadura.esquiva>>
+        <<if _passouInimigo>>
+            <<set _danoInimigo = setup.calcDanoInimigo(_rollsInimigo, 2, 10, 5)>>
+            Ela acerta você, causando _danoInimigo de dano. <<run $player.hp -= _danoInimigo>> <<atualizarStatus>>
+            Você sente um fluido estranho parecido com sangue saindo do seu corpo, e você parece sentir bem menos dor do que deveria ao ser atacado por uma coisa dessas.
+            A visão dessa coisa te atacando é aterrorizante.
+        <<else>>
+            Você consegue ter o reflexo de se esquivar, e o monstro passa reto por você.
+        <</if>>
+        É hora de correr.
+        <div class="linha" id="001">
+            <<link ">Correr (Teste de vigor)">>
+                <<set _rolls = setup.rollPool($player.atributos.vig)>>
+                <<set _passou = setup.calcPass(_rolls, 12, 0, $player.confianca)>>
+                Seu maior dado: _rolls.valor
+                Valor total: <<print rolls.valor + $player.confianca>>
+                <<if _rolls.sucessoGarantido>>
+                    <<replace "#001">>
+                        Você tira forças que você nem sabia que tinha, provavelmente devido à constituição mágica do seu corpo atual, e consegue correr muito. 
+                        Você consegue ver onde a Liz está indo, e continua correndo em direção a ela.
+                        Você dá uma espiada, e vê que a criatura está cansando de tanto tempo de caçada, e você aproveita para abrir uma vantagem em cima dela. <<run $player.confianca += 2>> <<run _sucessos += 2>> <<atualizarStatus>>
+                    <</replace>>
+                <<elseif _passou>>
+                    <<replace "#001">>
+                        Você aproveita que a criatura está se cansando de tanto tempo de caçada, e começa a correr.
+                        Você enxerga onde Liz está, e corre em sua direção. <<run $player.confianca += 1>> <<run _sucessos += 1>> <<atualizarStatus>>
+                    <</replace>>
+                <<else>>
+                        Você começa a correr, mas no ritmo que você está, você sente que a criatura vai te alcançar novamente.
+                <</if>>
+            <</link>>
+        </div>
+    </div>
+    <div class="linha">
+
+    </div>
+    <div class="linha">
+
+    </div>
+    <div class="linha">
+
+    </div>
+    <div class="linha">
+
+    </div>
+</div>
 
 :: Final
+<<statusFixo>>
+<div class="cena normal">
+    <div class="linha">
+        A criatura da floresta parece ter se afastado.
+        <<subirNivel>> <<atualizarStatus>>
+        <<if !$encontrado>>
+            Você percebe que, seguindo um pouco a trilha de sangue deixada por ela, há algo brilhando em tons quentes, como a prórpia criatura.
+            <<encontrarItemChave "Presa da Criatura da Floresta" "Um dos dentes da coisa que te perseguiu na floresta. Emana uma aura poderosa, e você tem a sensação de que o sangue brilhante impregnado nela pode ser usado para enfraquecer algo.">>
+        <</if>>
+        Você finalmente escuta sons normais de floresta, diferente do silêncio que estava enquanto o monstro estava presente.
+        Enquanto vocês caminham, você escuta o que parece som de pássaros e um farfalhar de folhas causado por pequenos animais passeando pelas árvores em busca de comida.
+        Você e Liz caminham lado a lado por um tempo pela floresta da serra de Sehanctus, até chegar no que parece uma pequena oficina.
+        [[>Se aproximar da oficina|Puzzle1]]
+    </div>
+</div>
+
+:: FinalMorte
+<<statusFixo>>
+<div class="cena normal">
+    <div class="linha">
+        Você desperta novamente, com as mesmas sensações da primeira vez. Muitas luzes coloridas, que aos poucos vão se apagando, seu corpo pesado e um formigamento que não passa. <<run $player.lives -= 1>> <<run $player.hp = maxHp>>
+        <<subirNivel>> <<atualizarStatus>>
+        - Você tem que tomar mais cuidado! - Liz diz. Ela está mais ao lado, encostada na parede do que parece ser uma oficina. - Eu consigo te consertar, mas não sei quantas vezes mais. Vamos, a gente tem que continuar, não podemos parar por aqui.
+        A floresta, agora que a criatura foi embora, parece mais viva. Diferente do silêncio que reinava enquanto a criatura caçava, agora os animais podem ser mais descuidados e fazer mais barulhos. Você escuta sons que te lembram dos cantos dos pássaros, e o farfalhar das folhas sendo mexidas conforme os animais passeam por elas.
+        [[>Se aproximar da oficina|Puzzle1]]
+    </div>
+</div>
